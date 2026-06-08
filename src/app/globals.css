@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #FF8C00;
+  --color-primary-hover: #e07b00;
+  --color-secondary: #2D2D2D;
+  --color-carbon: #1a1a1a;
+  --color-muted: #E0E0E0;
+  --color-surface: #F5F5F5;
+  --color-border: #e5e7eb;
+
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+  --font-display: var(--font-montserrat), "Montserrat", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-secondary);
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(#FF8C00 1px, transparent 1px),
+    linear-gradient(90deg, #FF8C00 1px, transparent 1px);
+  background-size: 60px 60px;
+}

@@ -1,0 +1,50 @@
+import type { Metadata } from "next";
+import { Inter, Montserrat } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Nicolás Silvera | Software Engineer & AI Specialist",
+  description:
+    "Transformo problemas operativos en soluciones tecnológicas reales. Software a medida, CRM, automatizaciones con IA y desarrollo web para empresas y pymes.",
+  keywords: [
+    "software a medida",
+    "desarrollo web",
+    "automatización",
+    "inteligencia artificial",
+    "CRM",
+    "Next.js",
+    "Buenos Aires",
+  ],
+  authors: [{ name: "Nicolás Silvera" }],
+  openGraph: {
+    title: "Nicolás Silvera | Soluciones Tecnológicas a Medida",
+    description:
+      "Software Engineer y AI Specialist. Entiendo tu negocio y construyo la herramienta adecuada para resolverlo.",
+    type: "website",
+    locale: "es_AR",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="es" className={`${inter.variable} ${montserrat.variable}`}>
+      <body className="antialiased">{children}</body>
+    </html>
+  );
+}
