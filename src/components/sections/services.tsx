@@ -38,15 +38,15 @@ export function Services() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative flex flex-col rounded-2xl p-6 border transition-all duration-300 ${
+              className={`relative flex flex-col rounded-2xl border transition-all duration-300 ${
                 service.highlighted
-                  ? "bg-[#2D2D2D] border-[#FF8C00] shadow-xl shadow-[#FF8C00]/10"
-                  : "bg-white border-[#E0E0E0] hover:border-[#FF8C00]/50 hover:shadow-lg"
+                  ? "bg-[#2D2D2D] border-[#FF8C00] shadow-2xl shadow-[#FF8C00]/20 p-7 lg:-my-4 lg:scale-[1.03] z-10"
+                  : "bg-white border-[#E0E0E0] hover:border-[#FF8C00]/50 hover:shadow-lg p-6"
               }`}
             >
-              {service.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#FF8C00] text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wide">
-                  Más popular
+              {service.highlighted && service.badge && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#FF8C00] text-white text-xs font-bold px-5 py-1.5 rounded-full uppercase tracking-wide whitespace-nowrap shadow-lg">
+                  {service.badge}
                 </div>
               )}
 

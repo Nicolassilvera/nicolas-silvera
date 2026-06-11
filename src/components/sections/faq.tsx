@@ -13,12 +13,12 @@ const faqs = [
   {
     question: "¿Cómo son los pagos?",
     answer:
-      "Generalmente trabajo con un anticipo del 40-50% para arrancar el proyecto y el saldo contra entrega, o en cuotas para proyectos más grandes. Acepto transferencia bancaria, MercadoPago y efectivo.",
+      "No cobro nada por adelantado antes de conocernos. El proceso es simple: primero agendamos la reunión de diagnóstico gratuita, entendemos bien el proyecto y acordamos los detalles. Recién ahí, al confirmar que arrancamos, se abona el 50% como inicio. El 50% restante se cobra contra entrega del proyecto finalizado. Acepto transferencia bancaria, MercadoPago y efectivo.",
   },
   {
     question: "¿Puedo reunirme de forma presencial?",
     answer:
-      "Sí. Trabajo en Buenos Aires y puedo reunirme presencialmente en la ciudad. También ofrezco reuniones virtuales por Zoom, Meet o Teams para clientes de otras ciudades o del exterior.",
+      "Sí. Estoy basado en CABA y puedo reunirme presencialmente en la ciudad. Si tenés un negocio o local, puedo ir directamente ahí para entender mejor tu operación. También ofrezco reuniones virtuales por Zoom, Meet o Teams para quienes lo prefieran o estén en otra ciudad.",
   },
   {
     question: "¿Qué pasa si necesito cambios después del lanzamiento?",

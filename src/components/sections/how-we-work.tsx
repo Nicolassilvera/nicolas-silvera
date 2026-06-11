@@ -61,7 +61,7 @@ export function HowWeWork() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="como-trabajamos" className="py-24 bg-[#1a1a1a]" ref={ref}>
+    <section id="como-trabajamos" className="parallax-dark py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

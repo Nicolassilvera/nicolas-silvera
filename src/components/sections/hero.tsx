@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
 
@@ -113,7 +114,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: photo placeholder */}
+          {/* Right: profile photo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -121,17 +122,21 @@ export function Hero() {
             className="hidden lg:flex justify-center"
           >
             <div className="relative">
-              <div className="w-80 h-80 rounded-2xl bg-gradient-to-br from-[#FF8C00]/20 to-[#2D2D2D] border border-[#FF8C00]/20 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 rounded-full bg-[#FF8C00]/20 border-2 border-[#FF8C00]/40 mx-auto mb-4 flex items-center justify-center">
-                    <span className="font-display font-bold text-5xl text-[#FF8C00]">
-                      NS
-                    </span>
-                  </div>
-                  <p className="text-gray-400 text-sm">Foto profesional</p>
-                  <p className="text-gray-600 text-xs">próximamente</p>
-                </div>
+              {/* Orange glow behind photo */}
+              <div className="absolute inset-0 rounded-2xl bg-[#FF8C00]/20 blur-2xl scale-110" />
+
+              <div className="relative w-80 h-96 rounded-2xl overflow-hidden border-2 border-[#FF8C00]/30 shadow-2xl shadow-[#FF8C00]/10">
+                <Image
+                  src="/logos/foto_perfil.png"
+                  alt="Nicolás Silvera"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                {/* Gradient overlay bottom */}
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#1a1a1a]/80 to-transparent" />
               </div>
+
               <div className="absolute -bottom-4 -right-4 bg-[#FF8C00] rounded-xl px-4 py-3 shadow-xl">
                 <p className="font-display font-bold text-white text-sm">
                   Disponible ahora
@@ -139,7 +144,7 @@ export function Hero() {
                 <p className="text-orange-100 text-xs">para nuevos proyectos</p>
               </div>
               <div className="absolute -top-4 -left-4 bg-[#2D2D2D] border border-[#FF8C00]/20 rounded-xl px-4 py-3 shadow-xl">
-                <p className="text-[#FF8C00] text-xs font-medium">Buenos Aires, AR</p>
+                <p className="text-[#FF8C00] text-xs font-medium">CABA, Argentina</p>
                 <p className="text-gray-400 text-xs">Remoto y presencial</p>
               </div>
             </div>

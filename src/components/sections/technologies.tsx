@@ -41,7 +41,7 @@ export function Technologies() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="tecnologias" className="py-24 bg-white" ref={ref}>
+    <section id="tecnologias" className="parallax-carbon py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,10 +52,10 @@ export function Technologies() {
           <span className="text-[#FF8C00] font-semibold text-sm uppercase tracking-widest">
             Stack tecnológico
           </span>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl text-[#2D2D2D] mt-3 mb-4">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl text-white mt-3 mb-4">
             Herramientas de trabajo
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             Selecciono la tecnología según el problema a resolver, no al revés.
           </p>
         </motion.div>
@@ -67,11 +67,11 @@ export function Technologies() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: gi * 0.1 }}
-              className="bg-[#F5F5F5] rounded-2xl p-6"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm"
             >
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-2 h-6 bg-[#FF8C00] rounded-full" />
-                <h3 className="font-display font-semibold text-[#2D2D2D]">
+                <h3 className="font-display font-semibold text-white">
                   {group.label}
                 </h3>
               </div>
@@ -82,7 +82,7 @@ export function Technologies() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.3, delay: gi * 0.1 + ti * 0.05 }}
-                    className="bg-white border border-[#E0E0E0] text-[#2D2D2D] text-sm px-3 py-1.5 rounded-lg font-mono hover:border-[#FF8C00] hover:text-[#FF8C00] transition-colors cursor-default"
+                    className="bg-white/10 border border-white/10 text-gray-300 text-sm px-3 py-1.5 rounded-lg font-mono hover:border-[#FF8C00] hover:text-[#FF8C00] transition-colors cursor-default"
                   >
                     {tech}
                   </motion.span>

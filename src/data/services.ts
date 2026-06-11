@@ -7,6 +7,7 @@ export interface Service {
   features: string[];
   cta: string;
   highlighted?: boolean;
+  badge?: string;
 }
 
 export const services: Service[] = [
@@ -45,25 +46,29 @@ export const services: Service[] = [
       "3 meses de soporte",
     ],
     cta: "Solicitar presupuesto",
-    highlighted: true,
   },
   {
     id: "crm-sistema",
-    name: "CRM o Sistema Interno",
+    name: "CRM con IA Integrada",
     description:
-      "Sistema de gestión personalizado para tu negocio: CRM, control de inventario, facturación, turnos o cualquier proceso que necesite digitalización.",
+      "No es solo un sistema de gestión: es una herramienta que entiende tu negocio. Seguimiento de clientes, pipeline de ventas, análisis con IA y alertas automáticas. Todo en un panel diseñado específicamente para tu operación.",
     price: "desde ARS 700.000",
-    priceNote: "Tiempo según alcance del proyecto",
+    priceNote: "Diagnóstico gratuito · Tiempo según alcance",
     features: [
-      "Análisis y relevamiento de procesos",
-      "Desarrollo completamente a medida",
-      "Roles y permisos de usuarios",
-      "Reportes y exportación de datos",
-      "Capacitación al equipo",
-      "Soporte técnico continuo",
-      "Escalabilidad garantizada",
+      "Pipeline de ventas con etapas personalizadas",
+      "Historial completo de interacciones por cliente",
+      "IA que analiza tu cartera y detecta oportunidades",
+      "Alertas automáticas de seguimiento y vencimientos",
+      "Panel de métricas y pizarrón de ventas diarias",
+      "Resúmenes ejecutivos generados por IA",
+      "Roles y permisos por usuario",
+      "Integración con WhatsApp y email",
+      "Capacitación al equipo incluida",
+      "Soporte continuo post-lanzamiento",
     ],
-    cta: "Agendar diagnóstico",
+    cta: "Quiero mi CRM",
+    highlighted: true,
+    badge: "Lo que más recomiendo",
   },
   {
     id: "automatizacion-ia",

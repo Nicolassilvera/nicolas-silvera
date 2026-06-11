@@ -51,3 +51,84 @@ h1, h2, h3, h4, h5, h6 {
     linear-gradient(90deg, #FF8C00 1px, transparent 1px);
   background-size: 60px 60px;
 }
+
+/* Parallax: background stays fixed to viewport, content scrolls over it */
+.parallax-dark {
+  background-image:
+    linear-gradient(rgba(255, 140, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 140, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(150deg, #111111 0%, #1e1e1e 50%, #111111 100%);
+  background-size: 60px 60px, 60px 60px, cover;
+  background-attachment: fixed, fixed, fixed;
+}
+
+.parallax-carbon {
+  background-image:
+    linear-gradient(rgba(255, 140, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 140, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(150deg, #1a1a1a 0%, #2D2D2D 60%, #1a1a1a 100%);
+  background-size: 60px 60px, 60px 60px, cover;
+  background-attachment: fixed, fixed, fixed;
+}
+
+.parallax-orange {
+  background-image: linear-gradient(135deg, #FF8C00 0%, #ff6b00 40%, #e07b00 100%);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Experience section — vintage image fixed to viewport */
+.vintage-parallax {
+  background-image: url('/logos/fondo_vintage.png');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+/* Tech scan line — sweeps top→bottom periodically, GPU Composite only */
+@keyframes tech-scan {
+  0%   { transform: translateY(-4px); opacity: 0; }
+  2%   { opacity: 1; }
+  30%  { transform: translateY(120vh); opacity: 0.9; }
+  31%  { transform: translateY(-4px); opacity: 0; }
+  100% { transform: translateY(-4px); opacity: 0; }
+}
+
+.scan-line-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  overflow: visible;
+  animation: tech-scan 9s ease-in-out infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Breathing orbs — only opacity + translateY = pure GPU Composite, zero CPU cost */
+@keyframes breathe {
+  0%, 100% { opacity: 0.04; }
+  50%       { opacity: 0.11; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px);   opacity: 0.05; }
+  50%       { transform: translateY(-20px); opacity: 0.10; }
+}
+
+@keyframes float-slow-r {
+  0%, 100% { transform: translateY(0px);  opacity: 0.04; }
+  50%       { transform: translateY(16px); opacity: 0.09; }
+}
+
+@keyframes pulse-opacity {
+  0%, 100% { opacity: 0.06; }
+  50%       { opacity: 0.02; }
+}
+
+.orb-breathe { animation: breathe       7s  ease-in-out infinite; will-change: opacity; }
+.orb-float   { animation: float-slow    9s  ease-in-out infinite; will-change: transform, opacity; }
+.orb-float-r { animation: float-slow-r 11s  ease-in-out infinite; will-change: transform, opacity; }
+.orb-ring    { animation: pulse-opacity  6s  ease-in-out infinite; will-change: opacity; }

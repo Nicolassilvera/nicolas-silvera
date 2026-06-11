@@ -10,6 +10,9 @@ export interface Project {
   featured?: boolean;
   status: "production" | "development" | "completed";
   imageColor: string;
+  url?: string;
+  githubUrl?: string;
+  logo?: string;
 }
 
 export const projects: Project[] = [
@@ -17,9 +20,9 @@ export const projects: Project[] = [
     id: "jarvis",
     name: "Jarvis",
     shortDescription:
-      "Sistema de inteligencia artificial personal con múltiples agentes especializados para automatización y análisis.",
+      "Sistema de inteligencia artificial con agentes especializados para prospección B2B, panel de control comercial y gestión de ventas diarias.",
     fullDescription:
-      "Jarvis es mi proyecto insignia: un sistema de IA modular diseñado para automatizar tareas, analizar documentos, gestionar conocimiento empresarial y operar como asistente ejecutivo. Integra múltiples modelos de lenguaje con herramientas propias para crear flujos de trabajo inteligentes.",
+      "Jarvis es mi proyecto insignia: un sistema de IA modular orientado a potenciar operaciones comerciales. Incluye búsqueda y calificación automática de compradores B2B, prospección inteligente con análisis de perfiles, panel de control para seguimiento del equipo de ventas y pizarrón de ventas diarias con métricas en tiempo real. También automatiza tareas, analiza documentos y opera como asistente ejecutivo con memoria persistente entre sesiones.",
     architecture:
       "Backend en Python con FastAPI exponiéndose como microservicios. Capa de orquestación con LangChain y llamadas directas a APIs de Claude y OpenAI. Frontend en Next.js con streaming de respuestas via WebSockets. Base de datos vectorial para memoria persistente.",
     technologies: [
@@ -36,15 +39,17 @@ export const projects: Project[] = [
       "WebSockets",
     ],
     results: [
-      "Reducción del 60% en tiempo dedicado a tareas repetitivas",
-      "Análisis automático de documentos en segundos",
-      "Memoria persistente entre sesiones",
-      "Integración con herramientas externas (calendarios, email, CRM)",
+      "Prospección B2B automatizada: búsqueda y calificación de compradores potenciales",
+      "Panel de control comercial con seguimiento del equipo de ventas",
+      "Pizarrón de ventas diarias con métricas en tiempo real",
+      "Memoria persistente entre sesiones para contexto continuo",
     ],
     category: "ai",
     featured: true,
     status: "development",
     imageColor: "#FF8C00",
+    logo: "/logos/jarvis.png",
+    githubUrl: "https://github.com/Nicolassilvera/Asistente-Closer-AI",
   },
   {
     id: "balanzas-caballito",
@@ -52,9 +57,9 @@ export const projects: Project[] = [
     shortDescription:
       "Plataforma web corporativa para empresa de balanzas industriales con catálogo, cotizador y servicio técnico.",
     fullDescription:
-      "Desarrollo completo de la presencia digital para Balanzas Caballito, empresa líder en equipos de pesaje industrial. El proyecto incluyó rediseño de identidad digital, catálogo interactivo de productos, sistema de cotización online y gestión de órdenes de servicio técnico.",
+      "Desarrollo de la presencia digital completa para Balanzas Caballito, empresa de equipos de pesaje industrial. El proyecto incluyó el diseño y desarrollo del sitio web con catálogo de 4 productos industriales, ficha técnica de cada balanza y formulario de contacto para solicitar cotizaciones.",
     architecture:
-      "Next.js con App Router para SEO optimizado. Panel administrativo para gestión de productos y cotizaciones. Integración con sistema de email para notificaciones automáticas. Hosting en Vercel con CDN global.",
+      "Sitio estático con Next.js optimizado para SEO. Catálogo de productos con ficha técnica detallada. Formulario de contacto integrado. Hosting en Vercel con CDN global.",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -66,15 +71,17 @@ export const projects: Project[] = [
       "Cloudinary",
     ],
     results: [
-      "Aumento del 40% en consultas online",
-      "Catálogo digital de más de 200 productos",
-      "Sistema de cotización automático 24/7",
-      "Posicionamiento SEO en primeras páginas de Google",
+      "Presencia digital profesional para empresa de balanzas industriales",
+      "Catálogo online de 4 equipos industriales con ficha técnica de cada uno",
+      "Formulario de cotización online disponible 24/7",
+      "Sitio optimizado para SEO y diseño responsive",
     ],
     category: "web",
     featured: true,
     status: "production",
     imageColor: "#2D7DD2",
+    url: "https://balanzas-caballito.vercel.app/index.html",
+    logo: "/logos/balanzas-caballito.png",
   },
   {
     id: "tecnofan",
@@ -105,6 +112,7 @@ export const projects: Project[] = [
     featured: true,
     status: "production",
     imageColor: "#10B981",
+    logo: "/logos/tecnofan.png",
   },
   {
     id: "crm-interno",

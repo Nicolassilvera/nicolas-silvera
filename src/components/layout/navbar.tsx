@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -32,11 +34,39 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a
-            href="#"
-            className="font-display font-bold text-xl text-white tracking-tight"
-          >
-            <span className="text-[#FF8C00]">N</span>icolás Silvera
+
+          {/* Logo / brand — animated swap on scroll */}
+          <a href="#" className="relative flex items-center h-10 overflow-hidden">
+            <AnimatePresence mode="wait">
+              {scrolled ? (
+                <motion.div
+                  key="logo-img"
+                  initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.7, rotate: 8 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <Image
+                    src="/logos/logo-ns.png"
+                    alt="Nicolás Silvera"
+                    width={40}
+                    height={40}
+                    className="h-10 w-auto object-contain"
+                  />
+                </motion.div>
+              ) : (
+                <motion.span
+                  key="logo-text"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.25 }}
+                  className="font-display font-bold text-xl text-white tracking-tight"
+                >
+                  <span className="text-[#FF8C00]">N</span>icolás Silvera
+                </motion.span>
+              )}
+            </AnimatePresence>
           </a>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -63,6 +93,7 @@ export function Navbar() {
           </nav>
 
           <button
+            type="button"
             className="md:hidden text-white p-2"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
@@ -86,6 +117,7 @@ export function Navbar() {
               </a>
             ))}
             <Button
+              type="button"
               className="w-full mt-2"
               onClick={() => {
                 setMenuOpen(false);

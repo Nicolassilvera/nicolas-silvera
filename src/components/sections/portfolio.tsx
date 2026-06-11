@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { projects, type Project } from "@/data/projects";
@@ -11,6 +12,8 @@ import {
   Cpu,
   Layers,
   TrendingUp,
+  ExternalLink,
+  Github,
 } from "lucide-react";
 
 const categoryLabels: Record<Project["category"], string> = {
@@ -23,6 +26,7 @@ const categoryLabels: Record<Project["category"], string> = {
 
 function ProjectCard({ project }: { project: Project }) {
   const [expanded, setExpanded] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   return (
     <motion.div
@@ -36,11 +40,19 @@ function ProjectCard({ project }: { project: Project }) {
       {/* Card header — always visible */}
       <div className="p-6">
         <div className="flex items-start justify-between gap-4 mb-4">
-          <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-            style={{ backgroundColor: project.imageColor + "20" }}
-          >
-            <Cpu size={22} style={{ color: project.imageColor }} />
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 overflow-hidden bg-[#F5F5F5]">
+            {project.logo && !logoError ? (
+              <Image
+                src={project.logo}
+                alt={`${project.name} logo`}
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <Cpu size={22} className="text-[#FF8C00]" />
+            )}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -77,20 +89,48 @@ function ProjectCard({ project }: { project: Project }) {
           )}
         </div>
 
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-2 text-[#FF8C00] text-sm font-semibold hover:gap-3 transition-all cursor-pointer"
-        >
-          {expanded ? (
-            <>
-              Ver menos <ChevronUp size={16} />
-            </>
-          ) : (
-            <>
-              Ver caso de éxito <ChevronDown size={16} />
-            </>
-          )}
-        </button>
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="flex items-center gap-2 text-[#FF8C00] text-sm font-semibold hover:gap-3 transition-all cursor-pointer"
+          >
+            {expanded ? (
+              <>
+                Ver menos <ChevronUp size={16} />
+              </>
+            ) : (
+              <>
+                Ver caso de éxito <ChevronDown size={16} />
+              </>
+            )}
+          </button>
+
+          <div className="flex items-center gap-3">
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-gray-400 hover:text-[#FF8C00] text-xs font-medium transition-colors"
+              >
+                <ExternalLink size={13} />
+                Ver sitio
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-gray-400 hover:text-[#FF8C00] text-xs font-medium transition-colors"
+              >
+                <Github size={13} />
+                Ver código
+              </a>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Expanded content */}
@@ -172,7 +212,7 @@ export function Portfolio() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="proyectos" className="py-24 bg-[#F5F5F5]" ref={ref}>
+    <section id="proyectos" className="parallax-dark py-24" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -183,10 +223,10 @@ export function Portfolio() {
           <span className="text-[#FF8C00] font-semibold text-sm uppercase tracking-widest">
             Proyectos
           </span>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl text-[#2D2D2D] mt-3 mb-4">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl text-white mt-3 mb-4">
             Casos de éxito reales
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             Cada proyecto tiene una historia: un problema real, una solución
             concreta y un resultado medible para el negocio.
           </p>

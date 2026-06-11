@@ -28,6 +28,10 @@ export const metadata: Metadata = {
     "Buenos Aires",
   ],
   authors: [{ name: "Nicolás Silvera" }],
+  icons: {
+    icon: "/logos/logo-ns.png",
+    apple: "/logos/logo-ns.png",
+  },
   openGraph: {
     title: "Nicolás Silvera | Soluciones Tecnológicas a Medida",
     description:
