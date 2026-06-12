@@ -114,18 +114,18 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: profile photo */}
+          {/* Right: profile photo — visible en todos los tamaños */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:flex justify-center"
+            className="flex justify-center mt-8 lg:mt-0"
           >
             <div className="relative">
               {/* Orange glow behind photo */}
               <div className="absolute inset-0 rounded-2xl bg-[#FF8C00]/20 blur-2xl scale-110" />
 
-              <div className="relative w-80 h-96 rounded-2xl overflow-hidden border-2 border-[#FF8C00]/30 shadow-2xl shadow-[#FF8C00]/10">
+              <div className="relative w-56 h-72 sm:w-64 sm:h-80 lg:w-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-[#FF8C00]/30 shadow-2xl shadow-[#FF8C00]/10">
                 <Image
                   src="/logos/foto_perfil.png"
                   alt="Nicolás Silvera"
@@ -137,13 +137,13 @@ export function Hero() {
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#1a1a1a]/80 to-transparent" />
               </div>
 
-              <div className="absolute -bottom-4 -right-4 bg-[#FF8C00] rounded-xl px-4 py-3 shadow-xl">
-                <p className="font-display font-bold text-white text-sm">
+              <div className="absolute -bottom-4 -right-4 bg-[#FF8C00] rounded-xl px-3 py-2 lg:px-4 lg:py-3 shadow-xl">
+                <p className="font-display font-bold text-white text-xs lg:text-sm">
                   Disponible ahora
                 </p>
                 <p className="text-orange-100 text-xs">para nuevos proyectos</p>
               </div>
-              <div className="absolute -top-4 -left-4 bg-[#2D2D2D] border border-[#FF8C00]/20 rounded-xl px-4 py-3 shadow-xl">
+              <div className="absolute -top-4 -left-4 bg-[#2D2D2D] border border-[#FF8C00]/20 rounded-xl px-3 py-2 lg:px-4 lg:py-3 shadow-xl">
                 <p className="text-[#FF8C00] text-xs font-medium">CABA, Argentina</p>
                 <p className="text-gray-400 text-xs">Remoto y presencial</p>
               </div>
