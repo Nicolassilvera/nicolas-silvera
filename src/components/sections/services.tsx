@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { services } from "@/data/services";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
+import { Check } from "lucide-react";
 
 export function Services() {
   const ref = useRef(null);
@@ -12,7 +12,8 @@ export function Services() {
 
   return (
     <section id="servicios" className="py-24 bg-white" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -26,12 +27,11 @@ export function Services() {
             ¿Qué puedo hacer por tu negocio?
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto">
-            Cada solución es a medida. Los precios son puntos de partida;
-            el alcance final se define en una reunión de diagnóstico gratuita.
+            Precios fijos, plazos claros. El alcance final se define en una reunión de diagnóstico gratuita.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
           {services.map((service, i) => (
             <motion.div
               key={service.id}
@@ -40,8 +40,8 @@ export function Services() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className={`relative flex flex-col rounded-2xl border transition-all duration-300 ${
                 service.highlighted
-                  ? "bg-[#2D2D2D] border-[#FF8C00] shadow-2xl shadow-[#FF8C00]/20 p-7 lg:-my-4 lg:scale-[1.03] z-10"
-                  : "bg-white border-[#E0E0E0] hover:border-[#FF8C00]/50 hover:shadow-lg p-6"
+                  ? "bg-[#2D2D2D] border-[#FF8C00] shadow-2xl shadow-[#FF8C00]/20 md:-my-4 z-10"
+                  : "bg-white border-[#E0E0E0] hover:border-[#FF8C00]/40 hover:shadow-lg"
               }`}
             >
               {service.highlighted && service.badge && (
@@ -50,68 +50,95 @@ export function Services() {
                 </div>
               )}
 
-              <div className="mb-4">
-                <h3
-                  className={`font-display font-bold text-xl mb-2 ${
-                    service.highlighted ? "text-white" : "text-[#2D2D2D]"
-                  }`}
-                >
+              {/* Header */}
+              <div className={`px-6 pt-8 pb-5 border-b ${service.highlighted ? "border-white/10" : "border-[#E0E0E0]"}`}>
+                <p className={`text-xs font-semibold uppercase tracking-widest mb-2 ${service.highlighted ? "text-[#FF8C00]" : "text-[#FF8C00]"}`}>
+                  {service.tagline}
+                </p>
+                <h3 className={`font-display font-bold text-2xl mb-1 ${service.highlighted ? "text-white" : "text-[#2D2D2D]"}`}>
                   {service.name}
                 </h3>
-                <p
-                  className={`text-sm leading-relaxed ${
-                    service.highlighted ? "text-gray-300" : "text-gray-600"
-                  }`}
-                >
+                <p className={`text-sm leading-relaxed mt-2 ${service.highlighted ? "text-gray-400" : "text-gray-500"}`}>
                   {service.description}
                 </p>
               </div>
 
-              <div className="mb-6">
-                <p className="font-display font-bold text-2xl text-[#FF8C00]">
+              {/* Precio */}
+              <div className={`px-6 py-5 border-b ${service.highlighted ? "border-white/10" : "border-[#E0E0E0]"}`}>
+                <p className="font-display font-bold text-3xl text-[#FF8C00]">
                   {service.price}
-                </p>
-                <p
-                  className={`text-xs mt-1 ${
-                    service.highlighted ? "text-gray-400" : "text-gray-400"
-                  }`}
-                >
-                  {service.priceNote}
                 </p>
               </div>
 
-              <ul className="space-y-2.5 mb-8 flex-1">
+              {/* Specs clave */}
+              <div className={`px-6 py-4 border-b grid grid-cols-3 gap-2 text-center ${service.highlighted ? "border-white/10" : "border-[#E0E0E0]"}`}>
+                <div>
+                  <p className={`text-lg font-bold ${service.highlighted ? "text-white" : "text-[#2D2D2D]"}`}>
+                    {service.pages}
+                  </p>
+                  <p className={`text-[10px] uppercase tracking-wide mt-0.5 ${service.highlighted ? "text-gray-400" : "text-gray-400"}`}>
+                    Páginas
+                  </p>
+                </div>
+                <div>
+                  <p className={`text-lg font-bold ${service.highlighted ? "text-white" : "text-[#2D2D2D]"}`}>
+                    {service.revisions}
+                  </p>
+                  <p className={`text-[10px] uppercase tracking-wide mt-0.5 ${service.highlighted ? "text-gray-400" : "text-gray-400"}`}>
+                    Revisiones
+                  </p>
+                </div>
+                <div>
+                  <p className={`text-sm font-bold leading-tight ${service.highlighted ? "text-white" : "text-[#2D2D2D]"}`}>
+                    {service.delivery}
+                  </p>
+                  <p className={`text-[10px] uppercase tracking-wide mt-0.5 ${service.highlighted ? "text-gray-400" : "text-gray-400"}`}>
+                    Entrega
+                  </p>
+                </div>
+              </div>
+
+              {/* Features */}
+              <ul className="px-6 py-5 space-y-2.5 flex-1">
                 {service.features.map((feature, fi) => (
                   <li key={fi} className="flex items-start gap-2 text-sm">
-                    <CheckCircle2
-                      size={15}
+                    <Check
+                      size={14}
                       className="text-[#FF8C00] mt-0.5 shrink-0"
                     />
-                    <span
-                      className={
-                        service.highlighted ? "text-gray-300" : "text-gray-600"
-                      }
-                    >
+                    <span className={service.highlighted ? "text-gray-300" : "text-gray-600"}>
                       {feature}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              <Button
-                variant={service.highlighted ? "primary" : "outline"}
-                className="w-full"
-                onClick={() =>
-                  document
-                    .getElementById("diagnostico")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                {service.cta}
-              </Button>
+              {/* CTA */}
+              <div className="px-6 pb-7 pt-2">
+                <Button
+                  variant={service.highlighted ? "primary" : "outline"}
+                  className="w-full"
+                  onClick={() =>
+                    document
+                      .getElementById("diagnostico")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                >
+                  {service.cta}
+                </Button>
+              </div>
             </motion.div>
           ))}
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center text-sm text-gray-400 mt-10"
+        >
+          Todos los precios son en pesos argentinos · Diagnóstico inicial sin cargo · El alcance final puede variar
+        </motion.p>
       </div>
     </section>
   );

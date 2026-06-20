@@ -1,9 +1,12 @@
 export interface Service {
   id: string;
   name: string;
+  tagline: string;
   description: string;
   price: string;
-  priceNote: string;
+  delivery: string;
+  pages: string;
+  revisions: number;
   features: string[];
   cta: string;
   highlighted?: boolean;
@@ -14,77 +17,69 @@ export const services: Service[] = [
   {
     id: "landing",
     name: "Landing Profesional",
+    tagline: "Presencia de impacto desde el día 1",
     description:
-      "Página de presentación de alto impacto para tu negocio o servicio. Diseño moderno, optimizado para conversión y posicionamiento en Google.",
-    price: "desde ARS 100.000",
-    priceNote: "Entrega en 5-7 días hábiles",
+      "Página de presentación de alto impacto para tu negocio o servicio. Diseño a medida, SEO básico y formulario de contacto.",
+    price: "ARS 75.000",
+    delivery: "2-3 días",
+    pages: "3",
+    revisions: 2,
     features: [
-      "Diseño personalizado y responsive",
-      "Optimización SEO básica",
+      "Diseño personalizado y responsivo",
+      "SEO básico",
       "Formulario de contacto",
-      "Integración con redes sociales",
-      "Hosting configurado",
-      "1 mes de soporte incluido",
+      "Integración redes sociales y WhatsApp",
+      "Carga de contenido incluida",
+      "Código fuente entregado",
     ],
-    cta: "Solicitar presupuesto",
+    cta: "Empezar ahora",
   },
   {
     id: "web-empresarial",
     name: "Web Empresarial",
+    tagline: "La presencia digital que tu empresa necesita",
     description:
-      "Sitio web completo con múltiples secciones, panel de administración, blog y herramientas de marketing. La presencia digital que tu empresa necesita.",
-    price: "desde ARS 250.000",
-    priceNote: "Entrega en 2-3 semanas",
+      "Sitio completo con múltiples secciones, panel de administración y herramientas de marketing. Incluye todo lo del plan anterior.",
+    price: "ARS 190.000",
+    delivery: "5-7 días",
+    pages: "7",
+    revisions: 5,
     features: [
-      "Diseño a medida con identidad de marca",
-      "Panel administrativo",
+      "Todo lo del plan anterior",
+      "Hasta 7 páginas a medida",
+      "Panel de administración",
       "Blog o noticias",
       "SEO avanzado",
-      "Integración con WhatsApp Business",
-      "Analytics y métricas",
-      "Capacitación incluida",
+      "Comentarios detallados en el código",
+      "Analytics integrado",
       "3 meses de soporte",
     ],
     cta: "Solicitar presupuesto",
+    highlighted: true,
+    badge: "Más popular",
   },
   {
-    id: "crm-sistema",
+    id: "crm-ia",
     name: "CRM con IA Integrada",
+    tagline: "Un sistema que entiende tu negocio",
     description:
-      "No es solo un sistema de gestión: es una herramienta que entiende tu negocio. Seguimiento de clientes, pipeline de ventas, análisis con IA y alertas automáticas. Todo en un panel diseñado específicamente para tu operación.",
-    price: "desde ARS 700.000",
-    priceNote: "Diagnóstico gratuito · Tiempo según alcance",
+      "CRM a medida con inteligencia artificial. Seguimiento de clientes, pipeline de ventas, análisis con IA y alertas automáticas.",
+    price: "ARS 500.000",
+    delivery: "14-18 días",
+    pages: "Ilimitadas",
+    revisions: 7,
     features: [
-      "Pipeline de ventas con etapas personalizadas",
-      "Historial completo de interacciones por cliente",
-      "IA que analiza tu cartera y detecta oportunidades",
-      "Alertas automáticas de seguimiento y vencimientos",
-      "Panel de métricas y pizarrón de ventas diarias",
+      "Pipeline de ventas personalizado",
+      "Historial completo de clientes",
+      "IA que detecta oportunidades de venta",
+      "Alertas automáticas de seguimiento",
+      "Panel de métricas y pizarrón diario",
       "Resúmenes ejecutivos generados por IA",
       "Roles y permisos por usuario",
-      "Integración con WhatsApp y email",
+      "Integración WhatsApp y email",
       "Capacitación al equipo incluida",
       "Soporte continuo post-lanzamiento",
     ],
     cta: "Quiero mi CRM",
-    highlighted: true,
-    badge: "Lo que más recomiendo",
-  },
-  {
-    id: "automatizacion-ia",
-    name: "Automatizaciones e IA",
-    description:
-      "Integración de inteligencia artificial y automatización en tus procesos. Desde chatbots hasta análisis de datos con IA para tomar mejores decisiones.",
-    price: "Presupuesto personalizado",
-    priceNote: "Evaluación gratuita del caso",
-    features: [
-      "Diagnóstico de procesos automatizables",
-      "Integración de IA en flujos existentes",
-      "Chatbots y asistentes virtuales",
-      "Automatización con n8n o Make",
-      "Análisis de datos con IA",
-      "Capacitación del equipo",
-    ],
-    cta: "Evaluar mi caso",
   },
 ];
