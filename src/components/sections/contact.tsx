@@ -3,7 +3,12 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Send, CheckCircle2, Linkedin, Github, Mail } from "lucide-react";
+import { Send, CheckCircle2, Linkedin, Github, Mail, MessageCircle } from "lucide-react";
+
+const WA_NUMBER = "5491140591621";
+const WA_MESSAGE = encodeURIComponent(
+  "Hola buenas, estaba viendo en los servicios digitales, me gustaría realizar un diagnóstico gratuito, ¿cómo podemos empezar?"
+);
 
 const rubros = [
   "Comercio / Retail",
@@ -308,6 +313,16 @@ export function Contact() {
                     </>
                   )}
                 </Button>
+
+                <a
+                  href={`https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold text-sm transition-colors duration-200"
+                >
+                  <MessageCircle size={16} />
+                  Escribime por WhatsApp
+                </a>
               </form>
             )}
           </motion.div>

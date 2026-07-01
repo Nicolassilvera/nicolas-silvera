@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Services } from "@/components/sections/services";
+import { Technologies } from "@/components/sections/technologies";
 import { HowWeWork } from "@/components/sections/how-we-work";
 import { Faq } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
@@ -18,6 +19,7 @@ export default function ServiciosPage() {
       <Navbar />
       <main>
         <Services />
+        <Technologies />
         <HowWeWork />
         <Faq />
         <Contact />
