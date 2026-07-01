@@ -4,7 +4,7 @@ import { Hero } from "@/components/sections/hero";
 import { Portfolio } from "@/components/sections/portfolio";
 import { Experience } from "@/components/sections/experience";
 import { Technologies } from "@/components/sections/technologies";
-import { Contact } from "@/components/sections/contact";
+import { ServiciosBridge } from "@/components/sections/servicios-bridge";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
         <Portfolio />
         <Experience />
         <Technologies />
-        <Contact />
+        <ServiciosBridge />
       </main>
       <Footer />
     </>
