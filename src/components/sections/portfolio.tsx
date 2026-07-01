@@ -3,17 +3,8 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { projects } from "@/data/projects";
-
-const GRID_BG: React.CSSProperties = {
-  backgroundImage: `
-    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px)
-  `,
-  backgroundSize: "42px 42px",
-  backgroundColor: "#08080a",
-};
 
 export function Portfolio() {
   const ref = useRef<HTMLElement>(null);
@@ -22,8 +13,12 @@ export function Portfolio() {
   const realProjects = projects.filter((p) => p.isReal);
 
   return (
-    <section id="proyectos" ref={ref} style={GRID_BG} className="py-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="proyectos"
+      ref={ref}
+      className="py-24 bg-[#0c0c0e]"
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <motion.div
@@ -35,113 +30,121 @@ export function Portfolio() {
           <span className="text-[#FF8C00] font-semibold text-xs uppercase tracking-widest">
             Proyectos
           </span>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl text-white mt-3 mb-4 leading-tight">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl text-white mt-3 leading-tight">
             Lo que construí
           </h2>
-          <p className="text-gray-500 text-base max-w-xl">
-            Tres proyectos reales, cada uno resolviendo un problema concreto.
-          </p>
         </motion.div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Cards */}
+        <div className="flex flex-col gap-5">
           {realProjects.map((project, i) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: i * 0.12 }}
-              className="group flex flex-col rounded-2xl overflow-hidden border border-white/8 bg-white/3 hover:border-white/20 hover:bg-white/5 transition-all duration-300"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="group relative rounded-2xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.055] hover:border-white/16 transition-all duration-300 overflow-hidden"
             >
-              {/* Accent header con logo */}
+              {/* Accent line left */}
               <div
-                className="relative h-36 flex items-center justify-center"
-                style={{ background: `${project.accent}14` }}
-              >
+                className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl"
+                style={{ background: project.accent }}
+              />
+
+              <div className="flex flex-col sm:flex-row items-start gap-6 p-6 sm:p-7 pl-8 sm:pl-9">
+
+                {/* Logo */}
                 <div
-                  className="absolute inset-x-0 top-0 h-0.5"
-                  style={{ background: project.accent }}
-                />
-                {project.logo ? (
-                  <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/10 shadow-lg">
+                  className="shrink-0 w-14 h-14 rounded-xl flex items-center justify-center border border-white/10"
+                  style={{ background: `${project.accent}18` }}
+                >
+                  {project.logo ? (
                     <Image
                       src={project.logo}
                       alt={project.name}
-                      width={48}
-                      height={48}
+                      width={38}
+                      height={38}
                       className="object-contain"
                     />
-                  </div>
-                ) : (
-                  <span className="text-5xl">{project.emoji}</span>
-                )}
-              </div>
+                  ) : (
+                    <span className="text-2xl">{project.emoji}</span>
+                  )}
+                </div>
 
-              {/* Body */}
-              <div className="flex flex-col flex-1 p-5 gap-3">
-                {/* Category + name */}
-                <div>
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-widest"
-                    style={{ color: project.accent }}
-                  >
-                    {project.cat}
-                  </span>
-                  <h3 className="font-display font-bold text-lg text-white mt-0.5">
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-widest"
+                      style={{ color: project.accent }}
+                    >
+                      {project.cat}
+                    </span>
+                    {project.url !== "#" ? (
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-emerald-400 border border-emerald-400/30 rounded-full px-2 py-0.5">
+                        En vivo
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 border border-white/10 rounded-full px-2 py-0.5">
+                        En desarrollo
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-display font-bold text-xl text-white mb-2">
                     {project.name}
                   </h3>
+
+                  <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                    {project.desc}
+                  </p>
+
+                  {/* Stack */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-white/5 text-gray-400 border border-white/8"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-gray-400 text-sm leading-relaxed flex-1">
-                  {project.desc}
-                </p>
-
-                {/* Stack tags */}
-                <div className="flex flex-wrap gap-1.5">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/6 text-gray-400 border border-white/8"
+                {/* Links — derecha en desktop */}
+                <div className="flex sm:flex-col items-center gap-3 shrink-0 sm:self-center">
+                  {project.url !== "#" && (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Ver ${project.name}`}
+                      className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-xl border transition-all duration-200 hover:scale-105"
+                      style={{
+                        color: project.accent,
+                        borderColor: `${project.accent}40`,
+                        background: `${project.accent}0d`,
+                      }}
                     >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex items-center gap-3 pt-1 border-t border-white/6 mt-1">
+                      {project.cta}
+                      <ArrowUpRight size={14} />
+                    </a>
+                  )}
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`GitHub de ${project.name}`}
-                      className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors"
+                      className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-200 transition-colors px-3 py-2 rounded-xl border border-white/8 hover:border-white/20"
                     >
                       <Github size={13} />
-                      Código
+                      GitHub
                     </a>
-                  )}
-                  {project.url && project.url !== "#" && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Ver ${project.name}`}
-                      className="flex items-center gap-1.5 text-xs font-semibold transition-colors ml-auto"
-                      style={{ color: project.accent }}
-                    >
-                      {project.cta}
-                      <ExternalLink size={12} />
-                    </a>
-                  )}
-                  {project.url === "#" && (
-                    <span className="ml-auto text-[10px] text-gray-600 uppercase tracking-wide font-semibold border border-white/8 rounded-full px-2.5 py-1">
-                      En desarrollo
-                    </span>
                   )}
                 </div>
+
               </div>
             </motion.div>
           ))}
