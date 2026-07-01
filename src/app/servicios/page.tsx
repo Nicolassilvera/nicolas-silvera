@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/layout/navbar";
+import { NavbarServicios } from "@/components/layout/navbar-servicios";
 import { Footer } from "@/components/layout/footer";
 import { Portfolio } from "@/components/sections/portfolio";
 import { Services } from "@/components/sections/services";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function ServiciosPage() {
   return (
     <>
-      <Navbar />
+      <NavbarServicios />
       <main>
         {/* Prueba social primero — que vean lo que construí antes del pitch */}
         <Portfolio topPadding />
