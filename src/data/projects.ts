@@ -5,6 +5,7 @@ export interface Project {
   cat: string;
   accent: string;
   desc: string;
+  scope?: string[];
   stack: string[];
   url: string;
   cta: string;
@@ -16,11 +17,16 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "jarvis",
-    name: "Jarvis",
+    name: "JarvisCRM",
     emoji: "🤖",
     cat: "CRM con IA",
     accent: "#fb7a2b",
-    desc: "Prospección B2B y ventas en piloto automático con agentes de IA.",
+    desc: "Sistema de gestión comercial con inteligencia artificial para automatizar ventas, prospectar clientes y controlar operaciones.",
+    scope: [
+      "Panel de control con stock inteligente — seguimiento en tiempo real del inventario y alertas automáticas",
+      "Conexión y creación de página web con gestión y control de pedidos integrado al CRM",
+      "Herramientas automatizadas para buscar potenciales clientes y agrandar cartera de forma continua",
+    ],
     stack: ["Python", "FastAPI", "LangChain", "Claude API"],
     url: "#",
     cta: "Ver código",
@@ -34,7 +40,13 @@ export const projects: Project[] = [
     emoji: "⚖️",
     cat: "Web Corporativa",
     accent: "#4f8ef7",
-    desc: "Catálogo, cotizador y servicio técnico para balanzas industriales.",
+    desc: "Sitio corporativo para una empresa de comercialización y servicio técnico de balanzas industriales.",
+    scope: [
+      "Catálogo digital de productos con fichas técnicas y especificaciones",
+      "Sistema de cotización online directo desde el sitio",
+      "Sección de servicio técnico con formulario de solicitud de reparación",
+      "SEO orientado a búsquedas de balanzas industriales en CABA y GBA",
+    ],
     stack: ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"],
     url: "https://balanzas-caballito.vercel.app/index.html",
     cta: "Ver sitio",
@@ -47,7 +59,13 @@ export const projects: Project[] = [
     emoji: "💻",
     cat: "E-commerce",
     accent: "#2fbf71",
-    desc: "Tienda de tecnología con MercadoPago, control de stock y panel admin.",
+    desc: "Tienda online de consolas portátiles y tecnología con pagos integrados y panel de administración.",
+    scope: [
+      "Tienda online enfocada en consolas portátiles y accesorios",
+      "Integración con MercadoPago para pagos seguros en pesos",
+      "Control de stock en tiempo real con alertas de bajo inventario",
+      "Panel administrativo para gestionar productos, pedidos y envíos",
+    ],
     stack: ["Next.js", "Node", "Express", "MongoDB"],
     url: "#",
     cta: "Ver caso",
