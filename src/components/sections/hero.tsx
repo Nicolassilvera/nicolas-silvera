@@ -28,9 +28,8 @@ const businesses = [
   {
     name: "TecnoFan",
     description: "Tienda de consolas portátiles y tecnología.",
-    url: "#",
+    url: "https://r36-s.vercel.app/",
     accent: "#2fbf71",
-    soon: true,
   },
 ];
 
@@ -154,7 +153,7 @@ export function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.45 + i * 0.12 }}
                 >
-                  {biz.soon ? (
+                  {biz.url === "#" ? (
                     <div className="rounded-xl border border-white/8 bg-white/3 px-4 py-3 opacity-60">
                       <BizCard biz={biz} />
                     </div>
@@ -185,7 +184,7 @@ function BizCard({
   biz,
   linked,
 }: {
-  biz: { name: string; description: string; accent: string; soon?: boolean };
+  biz: { name: string; description: string; url: string; accent: string };
   linked?: boolean;
 }) {
   return (
