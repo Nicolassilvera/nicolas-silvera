@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
 import { projects } from "@/data/projects";
 
-export function Portfolio() {
+export function Portfolio({ topPadding = false }: { topPadding?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -16,7 +16,7 @@ export function Portfolio() {
     <section
       id="proyectos"
       ref={ref}
-      className="py-24 bg-[#0c0c0e]"
+      className={`bg-[#0c0c0e] ${topPadding ? "pt-32 pb-24" : "py-24"}`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
