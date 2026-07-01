@@ -396,14 +396,16 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 export function Portfolio() {
   const sectionRef  = useRef<HTMLElement>(null);
   const isInView    = useInView(sectionRef as React.RefObject<Element>, { once: true, margin: "-100px" });
-  const [activeIndex, setActiveIndex] = useState(4);
+  const [activeIndex, setActiveIndex] = useState(1);
   const [modal, setModal] = useState<{ open: boolean; index: number }>({ open: false, index: 0 });
   const touchStartX = useRef(0);
+
+  const realProjects = projects.filter(p => p.isReal);
 
   const openModal  = (i: number) => setModal({ open: true, index: i });
   const closeModal = ()          => setModal(m => ({ ...m, open: false }));
 
-  const clamp = (v: number) => Math.max(0, Math.min(projects.length - 1, v));
+  const clamp = (v: number) => Math.max(0, Math.min(realProjects.length - 1, v));
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -460,7 +462,7 @@ export function Portfolio() {
             onTouchEnd={handleTouchEnd}
           >
             <div style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}>
-              {projects.map((p, i) => {
+              {realProjects.map((p, i) => {
                 const o    = i - activeIndex;
                 const absO = Math.abs(o);
                 const isActive = o === 0;
@@ -561,7 +563,7 @@ export function Portfolio() {
             >‹</button>
 
             <div style={{ display: "flex", gap: 6 }}>
-              {projects.map((p, i) => (
+              {realProjects.map((p, i) => (
                 <button
                   key={i}
                   type="button"
@@ -620,7 +622,7 @@ export function Portfolio() {
           onTouchEnd={handleTouchEnd}
         >
           <div style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}>
-            {projects.map((p, i) => {
+            {realProjects.map((p, i) => {
               const o    = i - activeIndex;
               const absO = Math.abs(o);
               return (

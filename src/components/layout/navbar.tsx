@@ -3,15 +3,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Sobre mí", href: "#sobre-mi" },
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Experiencia", href: "#experiencia" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Sobre mí",    href: "#sobre-mi",    external: false },
+  { label: "Proyectos",   href: "#proyectos",   external: false },
+  { label: "Experiencia", href: "#experiencia", external: false },
+  { label: "Contacto",    href: "#contacto",    external: false },
+  { label: "Servicios",   href: "/servicios",   external: false },
 ];
 
 export function Navbar() {
@@ -74,22 +73,15 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-gray-300 hover:text-[#FF8C00] transition-colors duration-200 font-medium"
+                className={`text-sm transition-colors duration-200 font-medium ${
+                  link.label === "Servicios"
+                    ? "text-[#FF8C00] hover:text-[#FF8C00]/80"
+                    : "text-gray-300 hover:text-[#FF8C00]"
+                }`}
               >
                 {link.label}
               </a>
             ))}
-            <Button
-              type="button"
-              size="sm"
-              onClick={() =>
-                document
-                  .getElementById("diagnostico")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Solicitar diagnóstico
-            </Button>
           </nav>
 
           <button
@@ -110,24 +102,16 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-gray-300 hover:text-[#FF8C00] transition-colors py-2 font-medium"
+                className={`transition-colors py-2 font-medium ${
+                  link.label === "Servicios"
+                    ? "text-[#FF8C00]"
+                    : "text-gray-300 hover:text-[#FF8C00]"
+                }`}
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <Button
-              type="button"
-              className="w-full mt-2"
-              onClick={() => {
-                setMenuOpen(false);
-                document
-                  .getElementById("diagnostico")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Solicitar diagnóstico
-            </Button>
           </div>
         </div>
       )}
