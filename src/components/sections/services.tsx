@@ -2,8 +2,242 @@
 
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Check, Globe, Brain, Zap, ChevronDown, Download, ExternalLink } from "lucide-react";
+import { Check, Globe, Brain, Zap, ChevronDown, ChevronLeft, ChevronRight, Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+// ── SLIDE CAROUSEL ────────────────────────────────────────
+const slideVariants = {
+  enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+};
+const slideTransition = { type: "tween" as const, duration: 0.35 };
+const slideLabels = ["Portada", "La propuesta", "Qué incluye", "Caso de ejemplo", "Asistente con IA", "Cómo funciona", "Cómo trabajamos"];
+const TOTAL_SLIDES = 7;
+
+function SlideContent({ index }: { index: number }) {
+  switch (index) {
+    case 0: return (
+      <div className="relative w-full h-full bg-[#0d2035] flex items-center overflow-hidden px-10 md:px-16">
+        <div className="absolute right-0 top-0 w-72 h-72 rounded-full bg-[#1a4a6e]/60 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+        <div className="absolute right-8 bottom-0 w-52 h-52 rounded-full bg-[#246080]/40 translate-y-1/4 pointer-events-none" />
+        <div className="relative z-10">
+          <p className="text-[#4db8d4] text-[10px] font-bold tracking-[3px] uppercase mb-4">Web CRM + Motor de Inteligencia</p>
+          <h2 className="text-white font-bold text-3xl md:text-4xl leading-tight mb-4">Todo lo que tu negocio<br />necesita en un solo sistema</h2>
+          <p className="text-gray-300 text-sm leading-relaxed max-w-md">Sitio web profesional integrado con un motor de IA. Gestión de clientes, búsqueda inteligente por imagen y automatizaciones que trabajan mientras tu negocio crece.</p>
+          <p className="text-gray-600 text-[10px] mt-6">Nicolás · Desarrollo web e inteligencia artificial</p>
+        </div>
+      </div>
+    );
+    case 1: return (
+      <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-10 md:px-16 py-8">
+        <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-2">La propuesta</p>
+        <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-2">Un sistema completo, a la medida de tu negocio</h2>
+        <p className="text-gray-500 text-sm mb-8">Sin límite de páginas, con siete rondas de revisiones y una entrega en 14 a 18 días.</p>
+        <div className="grid grid-cols-3 gap-6">
+          {[{ val: "∞", label: "Páginas" }, { val: "7", label: "Revisiones" }, { val: "14-18d", label: "Entrega" }].map((s) => (
+            <div key={s.label} className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+              <p className="text-[#3a7fa5] text-5xl font-bold mb-2">{s.val}</p>
+              <p className="text-[#0d2035] font-semibold text-base">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+    case 2: return (
+      <div className="w-full h-full bg-white flex flex-col justify-center px-10 md:px-14 py-6">
+        <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-5">Qué incluye</h2>
+        <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
+          {[
+            { title: "El sitio", items: ["Diseño a medida y responsivo", "SEO avanzado y Analytics", "Panel de administración", "WhatsApp y email integrado"] },
+            { title: "La inteligencia", items: ["Búsqueda por imagen con IA", "Detecta oportunidades de venta", "Alertas automáticas", "Panel de métricas diario"] },
+            { title: "El CRM y tu equipo", items: ["Pipeline de ventas personalizado", "Historial completo de clientes", "Roles y permisos por usuario", "Capacitación incluida"] },
+          ].map((col) => (
+            <div key={col.title} className="bg-[#f0f6fa] rounded-xl p-5">
+              <p className="text-[#3a7fa5] font-bold text-base mb-3">{col.title}</p>
+              <ul className="space-y-2">{col.items.map((item) => <li key={item} className="text-[#2d3748] text-sm leading-snug">{item}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 bg-[#0d2035] rounded-lg px-5 py-2.5"><p className="text-white text-sm font-semibold">Y además: soporte continuo post-lanzamiento.</p></div>
+      </div>
+    );
+    case 3: return (
+      <div className="w-full h-full bg-[#0d2035] flex flex-col justify-center px-10 md:px-16 py-8">
+        <p className="text-[#4db8d4] text-[10px] font-bold tracking-[3px] uppercase mb-2">Caso de ejemplo</p>
+        <h2 className="text-white font-bold text-2xl md:text-3xl mb-6">Tienda de repuestos sanitarios</h2>
+        <div className="grid grid-cols-4 gap-4">
+          {[
+            { num: "01", title: "Home", desc: "Búsqueda por foto, categorías y los productos más consultados." },
+            { num: "02", title: "Catálogo", desc: "Filtros por categoría, precio y acabado, con carrito de consulta." },
+            { num: "03", title: "Ficha de producto", desc: "Galería, precio y pedido de asesoramiento por WhatsApp." },
+            { num: "04", title: "Asistente con IA", desc: "Compara una foto con el catálogo y deriva a un asesor." },
+          ].map((s) => (
+            <div key={s.num} className="bg-[#1a3a52] rounded-xl p-5">
+              <p className="text-[#4db8d4] text-2xl font-bold mb-2">{s.num}</p>
+              <p className="text-white font-semibold text-sm mb-1.5">{s.title}</p>
+              <p className="text-gray-400 text-xs leading-relaxed">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 bg-[#246080] rounded-lg px-5 py-2.5"><p className="text-white text-sm font-semibold">Detrás de la tienda: CRM con pipeline de ventas y panel de métricas.</p></div>
+      </div>
+    );
+    case 4: return (
+      <div className="w-full h-full bg-[#f0f4f8] flex items-center px-10 md:px-12 py-8 gap-10">
+        <div className="flex-1 min-w-0">
+          <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-3">Asistente público</p>
+          <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl leading-tight mb-4">Un vendedor digital<br />en el bolsillo de<br />cada visitante</h2>
+          <ul className="space-y-2 text-sm text-[#2d3748]">
+            <li className="flex items-start gap-2"><span className="text-[#3a7fa5]">▸</span>Busca por foto, texto o medida.</li>
+            <li className="flex items-start gap-2"><span className="text-[#3a7fa5]">▸</span>Compara con datos reales del catálogo.</li>
+            <li className="flex items-start gap-2"><span className="text-[#3a7fa5]">▸</span>Prepara el mensaje para WhatsApp.</li>
+          </ul>
+        </div>
+        <div className="flex gap-3 flex-shrink-0">
+          <div className="w-44 bg-white rounded-[20px] shadow-lg overflow-hidden border border-gray-200" style={{ height: 240 }}>
+            <div className="bg-[#0d2035] text-white text-[10px] font-semibold px-3 py-2 flex items-center gap-1.5"><div className="w-4 h-4 rounded-full bg-[#3a7fa5] flex-shrink-0" />Asistente</div>
+            <div className="p-2.5 space-y-2">
+              <div className="bg-[#e8f0f5] rounded-lg p-2 text-[10px] text-[#0d2035]">Parece un flotante de cisterna.</div>
+              <div className="bg-white border border-gray-200 rounded-lg p-2">
+                <span className="bg-[#3a7fa5] text-white text-[9px] font-bold px-1.5 py-0.5 rounded mb-1 inline-block">Flotante 92%</span>
+                <p className="text-[10px] font-semibold text-[#0d2035]">Flotante universal</p>
+                <p className="text-[9px] text-gray-500">$7.450 · SAN-0720</p>
+              </div>
+              <div className="flex gap-1 items-center"><div className="flex-1 border border-gray-200 rounded-full px-2 py-1 text-[9px] text-gray-400">Escribí…</div><div className="w-5 h-5 rounded-full bg-[#3a7fa5] flex-shrink-0" /></div>
+            </div>
+          </div>
+          <div className="w-44 bg-white rounded-[20px] shadow-lg overflow-hidden border border-gray-200" style={{ height: 240 }}>
+            <div className="bg-[#0d2035] text-white text-[10px] font-semibold px-3 py-2 flex items-center gap-1.5"><div className="w-4 h-4 rounded-full bg-[#3a7fa5] flex-shrink-0" />Asistente</div>
+            <div className="p-2.5 space-y-2">
+              <div className="bg-[#3a7fa5] text-white text-[10px] rounded-lg p-2 ml-4">Compará las dos mezcladoras</div>
+              <div className="bg-[#e8f0f5] rounded-lg p-2">
+                <div className="grid grid-cols-3 gap-x-1 gap-y-0.5 text-[9px]">
+                  <div /><div className="font-bold text-[#0d2035]">Mono</div><div className="font-bold text-[#0d2035]">Bi</div>
+                  <div className="text-gray-400">Precio</div><div className="text-[#0d2035]">$68.5k</div><div className="text-[#0d2035]">$52.6k</div>
+                  <div className="text-gray-400">Garantía</div><div className="text-[#0d2035]">12m</div><div className="text-[#0d2035]">12m</div>
+                </div>
+                <p className="text-gray-600 mt-1.5 text-[9px]">La bimando cuesta $15.900 menos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+    case 5: return (
+      <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-10 md:px-16 py-8">
+        <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-2">Cómo funciona</p>
+        <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-7">Del visitante al cliente, sin perder ningún dato</h2>
+        <div className="flex items-start gap-2">
+          {[
+            { num: "1", title: "Visita", desc: "Llega desde Google, redes o una foto.", dark: false },
+            { num: "2", title: "Producto", desc: "Ve fichas con precio y galería.", dark: false },
+            { num: "3", title: "Consulta", desc: "Arma el carrito o pide asesoramiento.", dark: false },
+            { num: "4", title: "WhatsApp", desc: "El mensaje llega con el resumen listo.", dark: false },
+            { num: "5", title: "CRM", desc: "Queda registrado, con alertas de seguimiento.", dark: true },
+          ].map((step, i, arr) => (
+            <div key={step.num} className="flex items-center flex-1 gap-1.5">
+              <div className={`flex-1 rounded-xl p-4 ${step.dark ? "bg-[#0d2035]" : "bg-white"}`}>
+                <p className={`text-xl font-bold mb-1 ${step.dark ? "text-[#4db8d4]" : "text-[#3a7fa5]"}`}>{step.num}</p>
+                <p className={`font-semibold text-sm mb-1 ${step.dark ? "text-white" : "text-[#0d2035]"}`}>{step.title}</p>
+                <p className={`text-xs leading-relaxed ${step.dark ? "text-gray-300" : "text-gray-500"}`}>{step.desc}</p>
+              </div>
+              {i < arr.length - 1 && <span className="text-[#3a7fa5] font-bold text-base flex-shrink-0">&#8594;</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+    case 6: return (
+      <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-10 md:px-16 py-8">
+        <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-2">Cómo trabajamos</p>
+        <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-7">Cuatro pasos, entrega en 14 a 18 días</h2>
+        <div className="grid grid-cols-4 gap-4">
+          {[
+            { num: "1", title: "Diagnóstico inicial", desc: "Revisamos tu negocio y definimos el alcance. Sin cargo." },
+            { num: "2", title: "Diseño a medida", desc: "Pantallas con tu marca, para aprobar antes de programar." },
+            { num: "3", title: "Desarrollo y revisiones", desc: "Programamos el sitio, el CRM y la IA. Hasta 7 revisiones." },
+            { num: "4", title: "Capacitación y lanzamiento", desc: "Capacitamos al equipo, publicamos y seguimos con soporte." },
+          ].map((s) => (
+            <div key={s.num} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+              <p className="text-[#3a7fa5] text-2xl font-bold mb-2">{s.num}</p>
+              <p className="text-[#0d2035] font-semibold text-sm mb-1.5">{s.title}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+    default: return null;
+  }
+}
+
+function Carousel() {
+  const [slide, setSlide] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  function goTo(next: number) {
+    setDirection(next > slide ? 1 : -1);
+    setSlide(next);
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video select-none">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={slide}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={slideTransition}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.15}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -60 && slide < TOTAL_SLIDES - 1) goTo(slide + 1);
+              if (info.offset.x > 60 && slide > 0) goTo(slide - 1);
+            }}
+            className="absolute inset-0 cursor-grab active:cursor-grabbing"
+          >
+            <SlideContent index={slide} />
+          </motion.div>
+        </AnimatePresence>
+
+        <button
+          onClick={() => slide > 0 && goTo(slide - 1)}
+          disabled={slide === 0}
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center text-white transition-all disabled:opacity-0 pointer-events-auto"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <button
+          onClick={() => slide < TOTAL_SLIDES - 1 && goTo(slide + 1)}
+          disabled={slide === TOTAL_SLIDES - 1}
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center text-white transition-all disabled:opacity-0 pointer-events-auto"
+        >
+          <ChevronRight size={18} />
+        </button>
+        <div className="absolute bottom-2 right-3 z-20 text-white/40 text-[10px] font-mono select-none">
+          {slide + 1} / {TOTAL_SLIDES}
+        </div>
+      </div>
+
+      <div className="flex justify-center gap-2">
+        {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            title={slideLabels[i]}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === slide ? "w-8 bg-[#FF8C00]" : "w-1.5 bg-gray-300 hover:bg-gray-400"}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ── STATIC DATA ────────────────────────────────────────────
 const pillars = [
@@ -123,7 +357,7 @@ export function Services() {
           </p>
         </motion.div>
 
-        {/* PROPUESTA EN PDF */}
+        {/* GALERÍA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -131,49 +365,34 @@ export function Services() {
         >
           <div className="flex items-center justify-between mb-4">
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-              Propuesta comercial
+              Galería del sistema
             </p>
-            <div className="flex gap-2">
-              <a
-                href="/propuesta.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#FF8C00] transition-colors"
-              >
-                <ExternalLink size={13} /> Abrir
+            <div className="flex gap-3">
+              <a href="/propuesta.pdf" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#FF8C00] transition-colors">
+                <ExternalLink size={13} /> Abrir PDF
               </a>
-              <a
-                href="/propuesta.pdf"
-                download
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#FF8C00] transition-colors"
-              >
+              <a href="/propuesta.pdf" download
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#FF8C00] transition-colors">
                 <Download size={13} /> Descargar
               </a>
             </div>
           </div>
 
-          {/* PDF embed — desktop: iframe nativo; mobile: fallback link */}
-          <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gray-50">
-            <iframe
-              src="/propuesta.pdf"
-              className="w-full hidden sm:block"
-              style={{ height: 560 }}
-              title="Propuesta Web CRM + Motor de Inteligencia"
-            />
-            {/* Mobile fallback */}
-            <a
-              href="/propuesta.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="sm:hidden flex flex-col items-center justify-center gap-3 py-12 px-6 text-center"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-[#FF8C00]/10 flex items-center justify-center">
-                <ExternalLink size={24} className="text-[#FF8C00]" />
-              </div>
-              <p className="font-semibold text-[#2D2D2D]">Ver propuesta completa</p>
-              <p className="text-sm text-gray-500">Tocá para abrirla en tu navegador</p>
-            </a>
+          {/* Desktop: carousel con drag */}
+          <div className="hidden sm:block">
+            <Carousel />
           </div>
+
+          {/* Mobile: link al PDF */}
+          <a href="/propuesta.pdf" target="_blank" rel="noopener noreferrer"
+            className="sm:hidden flex flex-col items-center justify-center gap-3 py-12 px-6 text-center rounded-2xl border border-gray-200 bg-gray-50">
+            <div className="w-14 h-14 rounded-2xl bg-[#FF8C00]/10 flex items-center justify-center">
+              <ExternalLink size={24} className="text-[#FF8C00]" />
+            </div>
+            <p className="font-semibold text-[#2D2D2D]">Ver propuesta completa</p>
+            <p className="text-sm text-gray-500">Tocá para abrirla en tu navegador</p>
+          </a>
         </motion.div>
 
         {/* 3 PILLARS */}
