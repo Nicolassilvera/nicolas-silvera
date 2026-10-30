@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Check, Globe, Brain, Zap, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { Check, Globe, Brain, Zap, ChevronLeft, ChevronRight, ChevronDown, Maximize2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // ── SLIDE VARIANTS ────────────────────────────────────────
@@ -14,7 +14,6 @@ const slideVariants = {
 
 const slideTransition = { type: "tween" as const, duration: 0.35 };
 
-// ── SLIDE LABELS ──────────────────────────────────────────
 const slideLabels = [
   "Portada",
   "La propuesta",
@@ -25,50 +24,52 @@ const slideLabels = [
   "Cómo trabajamos",
 ];
 
+const TOTAL_SLIDES = 7;
+
 // ── SLIDE CONTENT ─────────────────────────────────────────
 function SlideContent({ index }: { index: number }) {
   switch (index) {
     case 0:
       return (
-        <div className="relative w-full h-full bg-[#0d2035] flex items-center overflow-hidden px-6 sm:px-12 md:px-16">
-          <div className="absolute right-0 top-0 w-40 h-40 sm:w-72 sm:h-72 rounded-full bg-[#1a4a6e]/60 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
-          <div className="absolute right-8 bottom-0 w-28 h-28 sm:w-52 sm:h-52 rounded-full bg-[#246080]/40 translate-y-1/4 pointer-events-none" />
+        <div className="relative w-full h-full bg-[#0d2035] flex items-center overflow-hidden px-10 md:px-16">
+          <div className="absolute right-0 top-0 w-72 h-72 rounded-full bg-[#1a4a6e]/60 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+          <div className="absolute right-8 bottom-0 w-52 h-52 rounded-full bg-[#246080]/40 translate-y-1/4 pointer-events-none" />
           <div className="relative z-10">
-            <p className="text-[#4db8d4] text-[9px] sm:text-[10px] font-bold tracking-[3px] uppercase mb-2 sm:mb-4">
+            <p className="text-[#4db8d4] text-[10px] font-bold tracking-[3px] uppercase mb-4">
               Web CRM + Motor de Inteligencia
             </p>
-            <h2 className="text-white font-bold text-xl sm:text-3xl md:text-4xl leading-tight mb-2 sm:mb-4">
+            <h2 className="text-white font-bold text-3xl md:text-4xl leading-tight mb-4">
               Todo lo que tu negocio<br />necesita en un solo sistema
             </h2>
-            <p className="text-gray-300 text-[11px] sm:text-sm leading-relaxed max-w-xs sm:max-w-md">
+            <p className="text-gray-300 text-sm leading-relaxed max-w-md">
               Sitio web profesional integrado con un motor de IA. Gestión de clientes,
               búsqueda inteligente por imagen y automatizaciones que trabajan mientras
               tu negocio crece.
             </p>
-            <p className="text-gray-600 text-[9px] sm:text-[10px] mt-3 sm:mt-6">Nicolás · Desarrollo web e inteligencia artificial</p>
+            <p className="text-gray-600 text-[10px] mt-6">Nicolás · Desarrollo web e inteligencia artificial</p>
           </div>
         </div>
       );
 
     case 1:
       return (
-        <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-6 sm:px-12 md:px-16 py-5 sm:py-8">
-          <p className="text-[#3a7fa5] text-[9px] sm:text-[10px] font-bold tracking-[3px] uppercase mb-1 sm:mb-2">La propuesta</p>
-          <h2 className="text-[#0d2035] font-bold text-lg sm:text-2xl md:text-3xl mb-1 sm:mb-2">
+        <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-10 md:px-16 py-8">
+          <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-2">La propuesta</p>
+          <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-2">
             Un sistema completo, a la medida de tu negocio
           </h2>
-          <p className="text-gray-500 text-[11px] sm:text-sm mb-4 sm:mb-8">
+          <p className="text-gray-500 text-sm mb-8">
             Sin límite de páginas, con siete rondas de revisiones y una entrega en 14 a 18 días.
           </p>
-          <div className="grid grid-cols-3 gap-3 sm:gap-6">
+          <div className="grid grid-cols-3 gap-6">
             {[
               { val: "∞", label: "Páginas" },
               { val: "7", label: "Revisiones" },
               { val: "14-18d", label: "Entrega" },
             ].map((s) => (
-              <div key={s.label} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-7 shadow-sm border border-gray-100">
-                <p className="text-[#3a7fa5] text-2xl sm:text-5xl font-bold mb-1 sm:mb-2">{s.val}</p>
-                <p className="text-[#0d2035] font-semibold text-xs sm:text-base">{s.label}</p>
+              <div key={s.label} className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+                <p className="text-[#3a7fa5] text-5xl font-bold mb-2">{s.val}</p>
+                <p className="text-[#0d2035] font-semibold text-base">{s.label}</p>
               </div>
             ))}
           </div>
@@ -77,9 +78,9 @@ function SlideContent({ index }: { index: number }) {
 
     case 2:
       return (
-        <div className="w-full h-full bg-white flex flex-col justify-center px-5 sm:px-10 md:px-14 py-4 sm:py-6">
-          <h2 className="text-[#0d2035] font-bold text-lg sm:text-2xl md:text-3xl mb-3 sm:mb-5">Qué incluye</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 flex-1 min-h-0">
+        <div className="w-full h-full bg-white flex flex-col justify-center px-10 md:px-14 py-6">
+          <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-5">Qué incluye</h2>
+          <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
             {[
               {
                 title: "El sitio",
@@ -94,43 +95,43 @@ function SlideContent({ index }: { index: number }) {
                 items: ["Pipeline de ventas personalizado", "Historial completo de clientes", "Roles y permisos por usuario", "Capacitación incluida"],
               },
             ].map((col) => (
-              <div key={col.title} className="bg-[#f0f6fa] rounded-lg sm:rounded-xl p-3 sm:p-5">
-                <p className="text-[#3a7fa5] font-bold text-xs sm:text-base mb-1.5 sm:mb-3">{col.title}</p>
-                <ul className="space-y-1 sm:space-y-2">
+              <div key={col.title} className="bg-[#f0f6fa] rounded-xl p-5">
+                <p className="text-[#3a7fa5] font-bold text-base mb-3">{col.title}</p>
+                <ul className="space-y-2">
                   {col.items.map((item) => (
-                    <li key={item} className="text-[#2d3748] text-[10px] sm:text-sm leading-snug">{item}</li>
+                    <li key={item} className="text-[#2d3748] text-sm leading-snug">{item}</li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-          <div className="mt-2 sm:mt-4 bg-[#0d2035] rounded-lg px-4 py-2 sm:px-5 sm:py-2.5">
-            <p className="text-white text-[10px] sm:text-sm font-semibold">Y además: soporte continuo post-lanzamiento.</p>
+          <div className="mt-4 bg-[#0d2035] rounded-lg px-5 py-2.5">
+            <p className="text-white text-sm font-semibold">Y además: soporte continuo post-lanzamiento.</p>
           </div>
         </div>
       );
 
     case 3:
       return (
-        <div className="w-full h-full bg-[#0d2035] flex flex-col justify-center px-5 sm:px-12 md:px-16 py-5 sm:py-8">
-          <p className="text-[#4db8d4] text-[9px] sm:text-[10px] font-bold tracking-[3px] uppercase mb-1 sm:mb-2">Caso de ejemplo</p>
-          <h2 className="text-white font-bold text-base sm:text-2xl md:text-3xl mb-3 sm:mb-6">Tienda de repuestos sanitarios</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+        <div className="w-full h-full bg-[#0d2035] flex flex-col justify-center px-10 md:px-16 py-8">
+          <p className="text-[#4db8d4] text-[10px] font-bold tracking-[3px] uppercase mb-2">Caso de ejemplo</p>
+          <h2 className="text-white font-bold text-2xl md:text-3xl mb-6">Tienda de repuestos sanitarios</h2>
+          <div className="grid grid-cols-4 gap-4">
             {[
               { num: "01", title: "Home", desc: "Búsqueda por foto, categorías y los productos más consultados." },
               { num: "02", title: "Catálogo", desc: "Filtros por categoría, precio y acabado, con carrito de consulta." },
               { num: "03", title: "Ficha de producto", desc: "Galería, precio y pedido de asesoramiento por WhatsApp." },
               { num: "04", title: "Asistente con IA", desc: "Compara una foto con el catálogo y deriva a un asesor." },
             ].map((s) => (
-              <div key={s.num} className="bg-[#1a3a52] rounded-lg sm:rounded-xl p-3 sm:p-5">
-                <p className="text-[#4db8d4] text-base sm:text-2xl font-bold mb-1 sm:mb-2">{s.num}</p>
-                <p className="text-white font-semibold text-[11px] sm:text-sm mb-1 sm:mb-1.5">{s.title}</p>
-                <p className="text-gray-400 text-[9px] sm:text-xs leading-relaxed">{s.desc}</p>
+              <div key={s.num} className="bg-[#1a3a52] rounded-xl p-5">
+                <p className="text-[#4db8d4] text-2xl font-bold mb-2">{s.num}</p>
+                <p className="text-white font-semibold text-sm mb-1.5">{s.title}</p>
+                <p className="text-gray-400 text-xs leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
-          <div className="mt-3 sm:mt-5 bg-[#246080] rounded-lg px-4 py-2 sm:px-5 sm:py-2.5">
-            <p className="text-white text-[10px] sm:text-sm font-semibold">
+          <div className="mt-5 bg-[#246080] rounded-lg px-5 py-2.5">
+            <p className="text-white text-sm font-semibold">
               Detrás de la tienda: CRM con pipeline de ventas y panel de métricas.
             </p>
           </div>
@@ -139,21 +140,20 @@ function SlideContent({ index }: { index: number }) {
 
     case 4:
       return (
-        <div className="w-full h-full bg-[#f0f4f8] flex items-center px-5 sm:px-10 md:px-12 py-5 sm:py-8 gap-4 sm:gap-10">
+        <div className="w-full h-full bg-[#f0f4f8] flex items-center px-10 md:px-12 py-8 gap-10">
           <div className="flex-1 min-w-0">
-            <p className="text-[#3a7fa5] text-[9px] sm:text-[10px] font-bold tracking-[3px] uppercase mb-2 sm:mb-3">Asistente público</p>
-            <h2 className="text-[#0d2035] font-bold text-lg sm:text-2xl md:text-3xl leading-tight mb-3 sm:mb-4">
+            <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-3">Asistente público</p>
+            <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl leading-tight mb-4">
               Un vendedor digital<br />en el bolsillo de<br />cada visitante
             </h2>
-            <ul className="space-y-2 text-[11px] sm:text-sm text-[#2d3748]">
+            <ul className="space-y-2 text-sm text-[#2d3748]">
               <li className="flex items-start gap-2"><span className="text-[#3a7fa5]">▸</span>Busca por foto, texto o medida.</li>
               <li className="flex items-start gap-2"><span className="text-[#3a7fa5]">▸</span>Compara con datos reales del catálogo.</li>
               <li className="flex items-start gap-2"><span className="text-[#3a7fa5]">▸</span>Prepara el mensaje para WhatsApp.</li>
             </ul>
           </div>
-          {/* Phones: hidden on mobile, visible from sm+ */}
-          <div className="hidden sm:flex gap-3 flex-shrink-0">
-            <div className="w-36 md:w-44 bg-white rounded-[20px] shadow-lg overflow-hidden border border-gray-200" style={{ height: 240 }}>
+          <div className="flex gap-3 flex-shrink-0">
+            <div className="w-44 bg-white rounded-[20px] shadow-lg overflow-hidden border border-gray-200" style={{ height: 240 }}>
               <div className="bg-[#0d2035] text-white text-[10px] font-semibold px-3 py-2 flex items-center gap-1.5">
                 <div className="w-4 h-4 rounded-full bg-[#3a7fa5] flex-shrink-0" />Asistente
               </div>
@@ -170,7 +170,7 @@ function SlideContent({ index }: { index: number }) {
                 </div>
               </div>
             </div>
-            <div className="w-36 md:w-44 bg-white rounded-[20px] shadow-lg overflow-hidden border border-gray-200" style={{ height: 240 }}>
+            <div className="w-44 bg-white rounded-[20px] shadow-lg overflow-hidden border border-gray-200" style={{ height: 240 }}>
               <div className="bg-[#0d2035] text-white text-[10px] font-semibold px-3 py-2 flex items-center gap-1.5">
                 <div className="w-4 h-4 rounded-full bg-[#3a7fa5] flex-shrink-0" />Asistente
               </div>
@@ -198,29 +198,12 @@ function SlideContent({ index }: { index: number }) {
 
     case 5:
       return (
-        <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-5 sm:px-12 md:px-16 py-4 sm:py-8">
-          <p className="text-[#3a7fa5] text-[9px] sm:text-[10px] font-bold tracking-[3px] uppercase mb-1 sm:mb-2">Cómo funciona</p>
-          <h2 className="text-[#0d2035] font-bold text-base sm:text-2xl md:text-3xl mb-3 sm:mb-7">
+        <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-10 md:px-16 py-8">
+          <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-2">Cómo funciona</p>
+          <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-7">
             Del visitante al cliente, sin perder ningún dato
           </h2>
-          {/* Mobile: 2×3 grid */}
-          <div className="grid grid-cols-2 gap-2 sm:hidden">
-            {[
-              { num: "1", title: "Visita", desc: "Google, redes o una foto.", dark: false },
-              { num: "2", title: "Producto", desc: "Fichas con precio y galería.", dark: false },
-              { num: "3", title: "Consulta", desc: "Carrito o asesoramiento.", dark: false },
-              { num: "4", title: "WhatsApp", desc: "Mensaje con resumen listo.", dark: false },
-              { num: "5", title: "CRM", desc: "Registrado con alertas.", dark: true },
-            ].map((step) => (
-              <div key={step.num} className={`rounded-lg p-3 ${step.dark ? "bg-[#0d2035]" : "bg-white"}`}>
-                <p className={`text-base font-bold mb-0.5 ${step.dark ? "text-[#4db8d4]" : "text-[#3a7fa5]"}`}>{step.num}</p>
-                <p className={`font-semibold text-[11px] mb-0.5 ${step.dark ? "text-white" : "text-[#0d2035]"}`}>{step.title}</p>
-                <p className={`text-[9px] leading-relaxed ${step.dark ? "text-gray-300" : "text-gray-500"}`}>{step.desc}</p>
-              </div>
-            ))}
-          </div>
-          {/* Desktop: 5-step row */}
-          <div className="hidden sm:flex items-start gap-2">
+          <div className="flex items-start gap-2">
             {[
               { num: "1", title: "Visita", desc: "Llega desde Google, redes o una foto.", dark: false },
               { num: "2", title: "Producto", desc: "Ve fichas con precio y galería.", dark: false },
@@ -229,10 +212,10 @@ function SlideContent({ index }: { index: number }) {
               { num: "5", title: "CRM", desc: "Queda registrado, con alertas de seguimiento.", dark: true },
             ].map((step, i, arr) => (
               <div key={step.num} className="flex items-center flex-1 gap-1.5">
-                <div className={`flex-1 rounded-xl p-3 md:p-4 ${step.dark ? "bg-[#0d2035]" : "bg-white"}`}>
-                  <p className={`text-lg md:text-xl font-bold mb-1 ${step.dark ? "text-[#4db8d4]" : "text-[#3a7fa5]"}`}>{step.num}</p>
-                  <p className={`font-semibold text-[11px] md:text-sm mb-1 ${step.dark ? "text-white" : "text-[#0d2035]"}`}>{step.title}</p>
-                  <p className={`text-[10px] md:text-xs leading-relaxed ${step.dark ? "text-gray-300" : "text-gray-500"}`}>{step.desc}</p>
+                <div className={`flex-1 rounded-xl p-4 ${step.dark ? "bg-[#0d2035]" : "bg-white"}`}>
+                  <p className={`text-xl font-bold mb-1 ${step.dark ? "text-[#4db8d4]" : "text-[#3a7fa5]"}`}>{step.num}</p>
+                  <p className={`font-semibold text-sm mb-1 ${step.dark ? "text-white" : "text-[#0d2035]"}`}>{step.title}</p>
+                  <p className={`text-xs leading-relaxed ${step.dark ? "text-gray-300" : "text-gray-500"}`}>{step.desc}</p>
                 </div>
                 {i < arr.length - 1 && <span className="text-[#3a7fa5] font-bold text-base flex-shrink-0">&#8594;</span>}
               </div>
@@ -243,22 +226,22 @@ function SlideContent({ index }: { index: number }) {
 
     case 6:
       return (
-        <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-5 sm:px-12 md:px-16 py-4 sm:py-8">
-          <p className="text-[#3a7fa5] text-[9px] sm:text-[10px] font-bold tracking-[3px] uppercase mb-1 sm:mb-2">Cómo trabajamos</p>
-          <h2 className="text-[#0d2035] font-bold text-base sm:text-2xl md:text-3xl mb-3 sm:mb-7">
+        <div className="w-full h-full bg-[#f0f4f8] flex flex-col justify-center px-10 md:px-16 py-8">
+          <p className="text-[#3a7fa5] text-[10px] font-bold tracking-[3px] uppercase mb-2">Cómo trabajamos</p>
+          <h2 className="text-[#0d2035] font-bold text-2xl md:text-3xl mb-7">
             Cuatro pasos, entrega en 14 a 18 días
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+          <div className="grid grid-cols-4 gap-4">
             {[
               { num: "1", title: "Diagnóstico inicial", desc: "Revisamos tu negocio y definimos el alcance. Sin cargo." },
               { num: "2", title: "Diseño a medida", desc: "Pantallas con tu marca, para aprobar antes de programar." },
               { num: "3", title: "Desarrollo y revisiones", desc: "Programamos el sitio, el CRM y la IA. Hasta 7 revisiones." },
               { num: "4", title: "Capacitación y lanzamiento", desc: "Capacitamos al equipo, publicamos y seguimos con soporte." },
             ].map((s) => (
-              <div key={s.num} className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 shadow-sm border border-gray-100">
-                <p className="text-[#3a7fa5] text-lg sm:text-2xl font-bold mb-1 sm:mb-2">{s.num}</p>
-                <p className="text-[#0d2035] font-semibold text-[11px] sm:text-sm mb-1 sm:mb-1.5">{s.title}</p>
-                <p className="text-gray-500 text-[9px] sm:text-xs leading-relaxed">{s.desc}</p>
+              <div key={s.num} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <p className="text-[#3a7fa5] text-2xl font-bold mb-2">{s.num}</p>
+                <p className="text-[#0d2035] font-semibold text-sm mb-1.5">{s.title}</p>
+                <p className="text-gray-500 text-xs leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -270,7 +253,72 @@ function SlideContent({ index }: { index: number }) {
   }
 }
 
-// ── STATIC DATA ───────────────────────────────────────────
+// ── CAROUSEL (inside modal) ────────────────────────────────
+function Carousel() {
+  const [slide, setSlide] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  function goTo(next: number) {
+    setDirection(next > slide ? 1 : -1);
+    setSlide(next);
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="relative rounded-xl overflow-hidden shadow-2xl aspect-video w-full">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={slide}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={slideTransition}
+            className="absolute inset-0"
+          >
+            <SlideContent index={slide} />
+          </motion.div>
+        </AnimatePresence>
+
+        <button
+          onClick={() => slide > 0 && goTo(slide - 1)}
+          disabled={slide === 0}
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center text-white transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+        >
+          <ChevronLeft size={18} />
+        </button>
+
+        <button
+          onClick={() => slide < TOTAL_SLIDES - 1 && goTo(slide + 1)}
+          disabled={slide === TOTAL_SLIDES - 1}
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center text-white transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+        >
+          <ChevronRight size={18} />
+        </button>
+
+        <div className="absolute bottom-2 right-3 z-20 text-white/40 text-[10px] font-mono select-none">
+          {slide + 1} / {TOTAL_SLIDES}
+        </div>
+      </div>
+
+      <div className="flex justify-center gap-2 flex-wrap">
+        {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            title={slideLabels[i]}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === slide ? "w-8 bg-[#FF8C00]" : "w-1.5 bg-white/30 hover:bg-white/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── STATIC DATA ────────────────────────────────────────────
 const pillars = [
   {
     icon: Globe,
@@ -359,26 +407,18 @@ const useCases = [
   { icon: "🍽️", label: "Gastronomía" },
 ];
 
-const TOTAL_SLIDES = 7;
-
-// ── MAIN COMPONENT ────────────────────────────────────────
+// ── MAIN COMPONENT ─────────────────────────────────────────
 export function Services() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [slide, setSlide] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [openFeature, setOpenFeature] = useState<string | null>(null);
-
-  function goTo(next: number) {
-    setDirection(next > slide ? 1 : -1);
-    setSlide(next);
-  }
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <section id="servicios" className="py-16 sm:py-24 bg-white" ref={ref}>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20">
 
-        {/* ── HEADER ── */}
+        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -397,7 +437,7 @@ export function Services() {
           </p>
         </motion.div>
 
-        {/* ── SLIDE CAROUSEL ── */}
+        {/* GALERÍA — preview card */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -407,63 +447,32 @@ export function Services() {
             Galería del sistema
           </p>
 
-          {/* aspect-[4/3] on mobile → taller; 16/9 on sm+ */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] sm:aspect-video">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={slide}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={slideTransition}
-                className="absolute inset-0"
-              >
-                <SlideContent index={slide} />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Prev */}
-            <button
-              onClick={() => slide > 0 && goTo(slide - 1)}
-              disabled={slide === 0}
-              className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center text-white transition-all disabled:opacity-20 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
-            {/* Next */}
-            <button
-              onClick={() => slide < TOTAL_SLIDES - 1 && goTo(slide + 1)}
-              disabled={slide === TOTAL_SLIDES - 1}
-              className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center text-white transition-all disabled:opacity-20 disabled:cursor-not-allowed"
-            >
-              <ChevronRight size={16} />
-            </button>
-
-            {/* Counter */}
-            <div className="absolute bottom-2 right-3 z-20 text-white/40 text-[10px] font-mono select-none">
-              {slide + 1} / {TOTAL_SLIDES}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="group relative w-full rounded-2xl overflow-hidden shadow-xl border border-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF8C00]"
+          >
+            <div className="aspect-video w-full pointer-events-none">
+              <SlideContent index={0} />
             </div>
-          </div>
 
-          {/* Dot indicators */}
-          <div className="flex justify-center gap-2 mt-3 sm:mt-4">
-            {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                title={slideLabels[i]}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === slide ? "w-8 bg-[#FF8C00]" : "w-1.5 bg-gray-300 hover:bg-gray-400"
-                }`}
-              />
-            ))}
-          </div>
+            {/* Hover overlay */}
+            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                <Maximize2 size={24} className="text-white" />
+              </div>
+              <p className="text-white font-semibold text-base">Ver propuesta completa</p>
+              <p className="text-white/60 text-sm">{TOTAL_SLIDES} diapositivas</p>
+            </div>
+
+            {/* Always-visible hint */}
+            <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 group-hover:opacity-0 transition-opacity">
+              <Maximize2 size={11} />
+              Ver propuesta ({TOTAL_SLIDES} slides)
+            </div>
+          </button>
         </motion.div>
 
-        {/* ── 3 PILLARS ── */}
+        {/* 3 PILLARS */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {pillars.map((p, i) => (
             <motion.div
@@ -482,7 +491,7 @@ export function Services() {
           ))}
         </div>
 
-        {/* ── MAIN CARD ── */}
+        {/* MAIN CARD */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -605,7 +614,7 @@ export function Services() {
           </div>
         </motion.div>
 
-        {/* ── USE CASES ── */}
+        {/* USE CASES */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -631,6 +640,41 @@ export function Services() {
         </motion.div>
 
       </div>
+
+      {/* FULLSCREEN MODAL */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 sm:p-6"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="w-full max-w-5xl flex flex-col gap-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-white/60 text-sm font-medium">Propuesta comercial</p>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <Carousel />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
