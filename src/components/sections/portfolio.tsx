@@ -13,16 +13,16 @@ function thumbUrl(url: string) {
 }
 
 // ─── Browser chrome screenshot mockup ────────────────────────────────────────
-function SitePreview({ url, accent }: { url: string; accent: string }) {
+function SitePreview({ url, accent, preview }: { url: string; accent: string; preview?: string }) {
   const [errored, setErrored] = useState(false);
   const displayUrl = url.replace(/^https?:\/\//, "");
+  const src = preview ?? thumbUrl(url);
 
   return (
     <div
       className="relative h-44 overflow-hidden rounded-t-2xl"
       style={{ background: `linear-gradient(135deg, ${accent}18, ${accent}08)` }}
     >
-      {/* Browser chrome */}
       <div className="flex items-center gap-1.5 px-3 py-2 bg-gray-200 border-b border-gray-300">
         <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
         <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
@@ -32,11 +32,10 @@ function SitePreview({ url, accent }: { url: string; accent: string }) {
         </div>
       </div>
 
-      {/* Screenshot over accent bg */}
       {!errored && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={thumbUrl(url)}
+          src={src}
           alt={displayUrl}
           className="absolute inset-0 w-full h-full object-cover object-top"
           onError={() => setErrored(true)}
@@ -44,7 +43,6 @@ function SitePreview({ url, accent }: { url: string; accent: string }) {
         />
       )}
 
-      {/* Fallback icon if errored */}
       {errored && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${accent}22` }}>
@@ -184,7 +182,7 @@ function ProjectCard({ project, index, isInView, onClick }: {
       onClick={onClick}
       className="group text-left rounded-2xl border border-gray-200 bg-white hover:border-[#FF8C00]/40 hover:shadow-[0_0_24px_rgba(255,140,0,0.12)] transition-all duration-300 overflow-hidden w-full cursor-pointer flex flex-col shadow-sm"
     >
-      <SitePreview url={project.url} accent={project.accent} />
+      <SitePreview url={project.url} accent={project.accent} preview={project.preview} />
 
       <div className="flex flex-col flex-1 p-5">
         <span className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: project.accent }}>

@@ -11,9 +11,10 @@ function thumbUrl(url: string) {
 }
 
 // ─── Browser chrome screenshot ────────────────────────────────────────────────
-function SitePreview({ url, accent }: { url: string; accent: string }) {
+function SitePreview({ url, accent, preview }: { url: string; accent: string; preview?: string }) {
   const [errored, setErrored] = useState(false);
   const displayUrl = url.replace(/^https?:\/\//, "");
+  const src = preview ?? thumbUrl(url);
 
   if (url === "#") {
     return (
@@ -42,7 +43,7 @@ function SitePreview({ url, accent }: { url: string; accent: string }) {
       {!errored && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={thumbUrl(url)}
+          src={src}
           alt={displayUrl}
           className="absolute inset-0 w-full h-full object-cover object-top"
           onError={() => setErrored(true)}
@@ -190,7 +191,7 @@ function ProjectCard({ project, index, isInView, onClick }: {
       onClick={onClick}
       className="group text-left rounded-2xl border border-gray-200 bg-white hover:border-[#FF8C00]/40 hover:shadow-[0_0_24px_rgba(255,140,0,0.12)] transition-all duration-300 overflow-hidden w-full cursor-pointer flex flex-col shadow-sm"
     >
-      <SitePreview url={project.url} accent={project.accent} />
+      <SitePreview url={project.url} accent={project.accent} preview={project.preview} />
 
       <div className="flex flex-col flex-1 p-5">
         <div className="flex items-center justify-between mb-1">

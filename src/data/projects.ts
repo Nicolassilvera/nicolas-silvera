@@ -12,6 +12,7 @@ export interface Project {
   githubUrl?: string;
   isReal: boolean;
   logo?: string;
+  preview?: string; // local screenshot override (public/screenshots/)
 }
 
 export const projects: Project[] = [
@@ -51,6 +52,7 @@ export const projects: Project[] = [
     cta: "Ver sitio",
     isReal: true,
     logo: "/logos/balanzas-caballito.png",
+    preview: "/screenshots/balanzas-caballito.png",
   },
   {
     id: "tecnofan",

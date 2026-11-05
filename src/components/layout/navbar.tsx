@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Sobre mí",    href: "#sobre-mi"    },
+  { label: "Home",        href: "/"            },
   { label: "Experiencia", href: "/experiencia" },
   { label: "Proyectos",   href: "/portfolio"   },
   { label: "Contacto",    href: "#contacto"    },
@@ -32,6 +32,7 @@ export function Navbar() {
 
   function isActive(href: string) {
     if (href.startsWith("#")) return false;
+    if (href === "/") return pathname === "/";
     return pathname === href;
   }
 
