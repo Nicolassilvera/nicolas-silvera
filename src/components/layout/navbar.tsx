@@ -9,10 +9,10 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "Home",        href: "/"            },
-  { label: "Experiencia", href: "/experiencia" },
   { label: "Proyectos",   href: "/portfolio"   },
-  { label: "Contacto",    href: "#contacto"    },
   { label: "Servicios",   href: "/servicios"   },
+  { label: "Experiencia", href: "/experiencia" },
+  { label: "Contacto",    href: "#contacto"    },
 ];
 
 // Pages with a light (white) background — navbar text goes dark
