@@ -13,10 +13,17 @@ function thumbUrl(url: string) {
 }
 
 // ─── Browser chrome screenshot mockup ────────────────────────────────────────
+type ImgStage = "preview" | "thumb" | "failed";
+
 function SitePreview({ url, accent, preview }: { url: string; accent: string; preview?: string }) {
-  const [errored, setErrored] = useState(false);
+  const [stage, setStage] = useState<ImgStage>(preview ? "preview" : "thumb");
   const displayUrl = url.replace(/^https?:\/\//, "");
-  const src = preview ?? thumbUrl(url);
+  const src = stage === "preview" ? preview! : thumbUrl(url);
+
+  function handleError() {
+    if (stage === "preview") setStage("thumb");
+    else setStage("failed");
+  }
 
   return (
     <div
@@ -32,23 +39,16 @@ function SitePreview({ url, accent, preview }: { url: string; accent: string; pr
         </div>
       </div>
 
-      {!errored && (
+      {stage !== "failed" && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          key={src}
           src={src}
           alt={displayUrl}
           className="absolute inset-0 w-full h-full object-cover object-top"
-          onError={() => setErrored(true)}
+          onError={handleError}
           loading="lazy"
         />
-      )}
-
-      {errored && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${accent}22` }}>
-            <ArrowUpRight size={18} style={{ color: accent }} />
-          </div>
-        </div>
       )}
     </div>
   );
