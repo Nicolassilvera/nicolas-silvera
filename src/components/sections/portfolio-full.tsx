@@ -7,7 +7,7 @@ import { ArrowUpRight, Github, X, CheckCircle2 } from "lucide-react";
 import { projects, type Project } from "@/data/projects";
 
 function thumbUrl(url: string) {
-  return `https://image.thum.io/get/width/1200/crop/900/${url.replace(/\/index\.html$/, "/")}`;
+  return `https://image.thum.io/get/width/1200/crop/900/noanimate/${url.replace(/\/index\.html$/, "/")}`;
 }
 
 // ─── Browser chrome screenshot ────────────────────────────────────────────────
