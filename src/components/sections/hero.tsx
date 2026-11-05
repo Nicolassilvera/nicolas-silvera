@@ -68,12 +68,11 @@ export function Hero() {
                 emprendimientos.
               </p>
               <p>
-                Hoy tengo dos negocios funcionando:{" "}
+                Esos proyectos tienen base real:{" "}
                 <span className="text-white font-medium">Balanzas Caballito</span>
-                , donde comercializamos y damos servicio técnico de balanzas industriales,
-                y{" "}
+                {" "}—balanzas industriales— y{" "}
                 <span className="text-white font-medium">TecnoFan</span>
-                , una tienda de consolas portátiles y tecnología.
+                {" "}—consolas portátiles y tecnología— son los negocios donde aplico en la práctica lo que desarrollo.
               </p>
               <p>
                 Todo lo que construí para esas tiendas —el sitio, el catálogo, los

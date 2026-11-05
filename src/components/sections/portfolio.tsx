@@ -28,10 +28,8 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         className="fixed inset-0 z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
-        {/* Backdrop */}
         <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-        {/* Panel */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -40,10 +38,8 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           className="relative w-full max-w-lg bg-[#111113] border border-white/12 rounded-2xl overflow-hidden shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Accent top bar */}
           <div className="h-1 w-full" style={{ background: project.accent }} />
 
-          {/* Header */}
           <div className="flex items-start gap-4 p-6 pb-4">
             <div
               className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border border-white/10"
@@ -71,10 +67,8 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </button>
           </div>
 
-          {/* Description */}
           <p className="px-6 pb-4 text-sm text-gray-400 leading-relaxed">{project.desc}</p>
 
-          {/* Scope */}
           {project.scope && project.scope.length > 0 && (
             <div className="px-6 pb-5">
               <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">Alcance del proyecto</p>
@@ -89,7 +83,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
           )}
 
-          {/* Stack */}
           <div className="px-6 pb-5">
             <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2.5">Stack</p>
             <div className="flex flex-wrap gap-1.5">
@@ -101,26 +94,17 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
           </div>
 
-          {/* Links */}
           <div className="flex items-center gap-3 px-6 pb-6 pt-2 border-t border-white/8">
             {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors"
-              >
+              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors">
                 <Github size={14} /> GitHub
               </a>
             )}
             {project.url !== "#" && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
+              <a href={project.url} target="_blank" rel="noopener noreferrer"
                 className="ml-auto flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:opacity-90"
-                style={{ background: project.accent, color: "#fff" }}
-              >
+                style={{ background: project.accent, color: "#fff" }}>
                 {project.cta} <ArrowUpRight size={14} />
               </a>
             )}
@@ -131,6 +115,100 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         </motion.div>
       </motion.div>
     </AnimatePresence>
+  );
+}
+
+// ─── Card de proyecto ─────────────────────────────────────────────────────────
+function ProjectCard({ project, index, isInView, onClick }: {
+  project: Project;
+  index: number;
+  isInView: boolean;
+  onClick: () => void;
+}) {
+  const isLive = project.url !== "#";
+
+  return (
+    <motion.button
+      type="button"
+      initial={{ opacity: 0, y: 28 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      onClick={onClick}
+      className="group text-left rounded-2xl border border-white/8 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/16 transition-all duration-300 overflow-hidden w-full cursor-pointer flex flex-col"
+    >
+      {/* Visual header */}
+      <div
+        className="relative h-40 flex items-center justify-center overflow-hidden"
+        style={{ background: `linear-gradient(135deg, ${project.accent}20, ${project.accent}06)` }}
+      >
+        {/* Decorative blobs */}
+        <div
+          className="absolute -right-6 -top-6 w-28 h-28 rounded-full opacity-25 blur-xl"
+          style={{ background: project.accent }}
+        />
+        <div
+          className="absolute -left-4 -bottom-4 w-20 h-20 rounded-full opacity-15 blur-lg"
+          style={{ background: project.accent }}
+        />
+
+        {/* Logo / emoji */}
+        <div
+          className="relative z-10 w-16 h-16 rounded-2xl border border-white/10 flex items-center justify-center shadow-lg"
+          style={{ background: `${project.accent}1a` }}
+        >
+          {project.logo ? (
+            <Image src={project.logo} alt={project.name} width={42} height={42} className="object-contain" />
+          ) : (
+            <span className="text-3xl">{project.emoji}</span>
+          )}
+        </div>
+
+        {/* Live / dev badge */}
+        <div className="absolute top-3 right-3">
+          {isLive ? (
+            <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-400/10 border border-emerald-400/25 rounded-full px-2 py-0.5">
+              En vivo
+            </span>
+          ) : (
+            <span className="text-[10px] font-semibold text-gray-500 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">
+              En desarrollo
+            </span>
+          )}
+        </div>
+
+        {/* Bottom accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: `${project.accent}50` }} />
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-col flex-1 p-5">
+        <span className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: project.accent }}>
+          {project.cat}
+        </span>
+        <h3 className="font-display font-bold text-base text-white mb-2 leading-snug">{project.name}</h3>
+        <p className="text-gray-400 text-sm leading-relaxed flex-1">{project.desc}</p>
+
+        {/* Stack tags */}
+        <div className="flex flex-wrap gap-1.5 mt-4 mb-4">
+          {project.stack.slice(0, 4).map((tech) => (
+            <span key={tech} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-gray-500 border border-white/8">
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Footer CTA */}
+        <div className="flex items-center justify-between pt-3 border-t border-white/6">
+          <span className="text-xs text-gray-600 group-hover:text-gray-400 transition-colors">
+            Ver detalle
+          </span>
+          <ArrowUpRight
+            size={15}
+            className="text-gray-600 group-hover:text-gray-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+          />
+        </div>
+      </div>
+    </motion.button>
   );
 }
 
@@ -156,94 +234,34 @@ export function Portfolio({ topPadding = false }: { topPadding?: boolean }) {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-14"
+            className="mb-12"
           >
             <span className="text-[#FF8C00] font-semibold text-xs uppercase tracking-widest">
-              Proyectos
+              Portfolio
             </span>
             <h2 className="font-display font-bold text-4xl sm:text-5xl text-white mt-3 mb-4 leading-tight">
               Lo que construí
             </h2>
             <p className="text-gray-500 text-base max-w-xl">
-              Tres proyectos reales. Tocá cualquiera para ver el detalle.
+              Proyectos reales — tocá cualquiera para ver el detalle, el stack y los links.
             </p>
           </motion.div>
 
-          {/* Cards */}
-          <div className="flex flex-col gap-5">
+          {/* Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {realProjects.map((project, i) => (
-              <motion.button
+              <ProjectCard
                 key={project.id}
-                type="button"
-                initial={{ opacity: 0, y: 24 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                project={project}
+                index={i}
+                isInView={isInView}
                 onClick={() => setSelected(project)}
-                className="group relative text-left rounded-2xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/18 transition-all duration-300 overflow-hidden w-full cursor-pointer"
-              >
-                {/* Accent line left */}
-                <div
-                  className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl"
-                  style={{ background: project.accent }}
-                />
-
-                <div className="flex flex-col sm:flex-row items-start gap-5 p-5 sm:p-6 pl-7 sm:pl-8">
-
-                  {/* Logo */}
-                  <div
-                    className="shrink-0 w-13 h-13 rounded-xl flex items-center justify-center border border-white/10 w-[52px] h-[52px]"
-                    style={{ background: `${project.accent}18` }}
-                  >
-                    {project.logo ? (
-                      <Image src={project.logo} alt={project.name} width={36} height={36} className="object-contain" />
-                    ) : (
-                      <span className="text-2xl">{project.emoji}</span>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: project.accent }}>
-                        {project.cat}
-                      </span>
-                      {project.url !== "#" ? (
-                        <span className="text-[10px] font-semibold uppercase tracking-wide text-emerald-400 border border-emerald-400/30 rounded-full px-2 py-0.5">
-                          En vivo
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 border border-white/10 rounded-full px-2 py-0.5">
-                          En desarrollo
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="font-display font-bold text-lg text-white mb-1.5">{project.name}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{project.desc}</p>
-
-                    {/* Stack */}
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {project.stack.map((tech) => (
-                        <span key={tech} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-gray-500 border border-white/8">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* "Ver más" hint */}
-                  <div className="shrink-0 self-center flex items-center gap-1 text-xs text-gray-600 group-hover:text-gray-300 transition-colors sm:pr-1">
-                    <span className="hidden sm:inline">Ver más</span>
-                    <ArrowUpRight size={15} className="rotate-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </div>
-                </div>
-              </motion.button>
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Modal */}
       {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
     </>
   );
