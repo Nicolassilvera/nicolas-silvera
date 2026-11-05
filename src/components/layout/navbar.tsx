@@ -8,18 +8,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Sobre mí",    href: "#sobre-mi"  },
-  { label: "Proyectos",   href: "#proyectos" },
-  { label: "Experiencia", href: "#experiencia" },
-  { label: "Contacto",    href: "#contacto"  },
-  { label: "Portfolio",   href: "/portfolio" },
-  { label: "Servicios",   href: "/servicios" },
+  { label: "Sobre mí",    href: "#sobre-mi"    },
+  { label: "Experiencia", href: "/experiencia" },
+  { label: "Proyectos",   href: "/portfolio"   },
+  { label: "Contacto",    href: "#contacto"    },
+  { label: "Servicios",   href: "/servicios"   },
 ];
+
+// Pages with a light (white) background — navbar text goes dark
+const lightPages = ["/portfolio", "/experiencia"];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isLight = lightPages.includes(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -34,22 +37,23 @@ export function Navbar() {
 
   function linkClass(href: string) {
     if (isActive(href)) return "text-[#FF8C00]";
-    if (href === "/servicios" && pathname !== "/portfolio") return "text-[#FF8C00] hover:text-[#FF8C00]/80";
-    return "text-gray-300 hover:text-[#FF8C00]";
+    if (href === "/servicios") return "text-[#FF8C00] hover:text-[#FF8C00]/80";
+    return isLight
+      ? "text-gray-700 hover:text-[#FF8C00]"
+      : "text-gray-300 hover:text-[#FF8C00]";
   }
 
+  const headerBg = scrolled
+    ? isLight
+      ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200"
+      : "bg-[#1a1a1a]/95 backdrop-blur-md shadow-lg"
+    : "bg-transparent";
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#1a1a1a]/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
-          {/* Logo */}
           <Link href="/" className="relative flex items-center h-10 overflow-hidden">
             <AnimatePresence mode="wait">
               {scrolled ? (
@@ -75,7 +79,7 @@ export function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.25 }}
-                  className="font-display font-bold text-xl text-white tracking-tight"
+                  className={`font-display font-bold text-xl tracking-tight ${isLight ? "text-gray-900" : "text-white"}`}
                 >
                   <span className="text-[#FF8C00]">N</span>icolás Silvera
                 </motion.span>
@@ -97,7 +101,7 @@ export function Navbar() {
 
           <button
             type="button"
-            className="md:hidden text-white p-2"
+            className={`md:hidden p-2 ${isLight ? "text-gray-800" : "text-white"}`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -107,7 +111,7 @@ export function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-[#1a1a1a]/98 backdrop-blur-md border-t border-white/10">
+        <div className={`md:hidden backdrop-blur-md border-t ${isLight ? "bg-white/98 border-gray-200" : "bg-[#1a1a1a]/98 border-white/10"}`}>
           <div className="px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a

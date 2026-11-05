@@ -12,12 +12,12 @@ const typeLabels = {
   "part-time": "Part-time",
 };
 
-export function Experience() {
+export function Experience({ topPadding = false }: { topPadding?: boolean }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experiencia" className="relative overflow-hidden bg-[#F5F5F5] py-24" ref={ref}>
+    <section id="experiencia" className={`relative overflow-hidden bg-[#F5F5F5] ${topPadding ? "pt-32 pb-24" : "py-24"}`} ref={ref}>
       <svg
         aria-hidden="true"
         className="scan-line-wave"

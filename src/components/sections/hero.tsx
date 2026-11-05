@@ -135,15 +135,12 @@ export function Hero() {
               </div>
 
               {/* Buttons — stacked, full width of photo */}
-              <button
-                type="button"
-                onClick={() =>
-                  document.getElementById("experiencia")?.scrollIntoView({ behavior: "smooth" })
-                }
+              <Link
+                href="/experiencia"
                 className="w-full text-center border border-white/20 text-white text-sm font-medium px-5 py-3 rounded-xl hover:border-[#FF8C00]/60 hover:text-[#FF8C00] transition-all duration-200"
               >
                 Experiencia
-              </button>
+              </Link>
               <Link
                 href="/servicios"
                 className="w-full text-center bg-[#FF8C00] text-white text-sm font-semibold px-5 py-3 rounded-xl hover:bg-[#FF8C00]/90 transition-all duration-200"
