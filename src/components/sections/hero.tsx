@@ -138,11 +138,11 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() =>
-                  document.getElementById("proyectos")?.scrollIntoView({ behavior: "smooth" })
+                  document.getElementById("experiencia")?.scrollIntoView({ behavior: "smooth" })
                 }
                 className="w-full text-center border border-white/20 text-white text-sm font-medium px-5 py-3 rounded-xl hover:border-[#FF8C00]/60 hover:text-[#FF8C00] transition-all duration-200"
               >
-                Más info
+                Experiencia
               </button>
               <Link
                 href="/servicios"
