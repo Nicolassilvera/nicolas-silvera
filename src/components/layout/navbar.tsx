@@ -38,7 +38,6 @@ export function Navbar() {
 
   function linkClass(href: string) {
     if (isActive(href)) return "text-[#FF8C00]";
-    if (href === "/servicios") return "text-[#FF8C00] hover:text-[#FF8C00]/80";
     return isLight
       ? "text-gray-700 hover:text-[#FF8C00]"
       : "text-gray-300 hover:text-[#FF8C00]";

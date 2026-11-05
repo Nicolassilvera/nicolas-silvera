@@ -329,13 +329,13 @@ const useCases = [
 ];
 
 // ── MAIN COMPONENT ─────────────────────────────────────────
-export function Services() {
+export function Services({ topPadding = false }: { topPadding?: boolean }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [openFeature, setOpenFeature] = useState<string | null>(null);
 
   return (
-    <section id="servicios" className="py-16 sm:py-24 bg-white" ref={ref}>
+    <section id="servicios" className={`${topPadding ? "pt-32 pb-16 sm:pb-24" : "py-16 sm:py-24"} bg-white`} ref={ref}>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20">
 
         {/* HEADER */}

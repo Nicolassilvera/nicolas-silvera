@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { NavbarServicios } from "@/components/layout/navbar-servicios";
+import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { Portfolio } from "@/components/sections/portfolio";
 import { Services } from "@/components/sections/services";
 import { Technologies } from "@/components/sections/technologies";
 import { HowWeWork } from "@/components/sections/how-we-work";
@@ -17,19 +16,12 @@ export const metadata: Metadata = {
 export default function ServiciosPage() {
   return (
     <>
-      <NavbarServicios />
+      <Navbar />
       <main>
-        {/* Prueba social primero — que vean lo que construí antes del pitch */}
-        <Portfolio topPadding />
-        {/* Paquetes y precios */}
-        <Services />
-        {/* Stack tecnológico */}
+        <Services topPadding />
         <Technologies />
-        {/* Proceso de trabajo */}
         <HowWeWork />
-        {/* FAQ */}
         <Faq />
-        {/* Formulario de contacto + WhatsApp */}
         <Contact />
       </main>
       <Footer />
