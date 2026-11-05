@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 function fadeUp(delay: number) {
   return {
@@ -16,21 +16,6 @@ const stack = [
   "Next.js", "TypeScript", "Python", "PostgreSQL",
   "FastAPI", "LangChain", "Claude API", "Tailwind CSS",
   "Node.js", "MongoDB", "Vercel", "n8n",
-];
-
-const businesses = [
-  {
-    name: "Balanzas Caballito",
-    description: "Comercialización y servicio técnico de balanzas industriales.",
-    url: "https://balanzas-caballito.vercel.app/index.html",
-    accent: "#4f8ef7",
-  },
-  {
-    name: "TecnoFan",
-    description: "Tienda de consolas portátiles y tecnología.",
-    url: "https://r36-s.vercel.app/",
-    accent: "#2fbf71",
-  },
 ];
 
 export function Hero() {
@@ -47,7 +32,7 @@ export function Hero() {
       <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-[#FF8C00]/5 rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
           {/* Left: bio */}
           <div>
@@ -68,11 +53,25 @@ export function Hero() {
                 emprendimientos.
               </p>
               <p>
-                Esos proyectos tienen base real:{" "}
-                <span className="text-white font-medium">Balanzas Caballito</span>
-                {" "}—balanzas industriales— y{" "}
-                <span className="text-white font-medium">TecnoFan</span>
-                {" "}—consolas portátiles y tecnología— son los negocios donde aplico en la práctica lo que desarrollo.
+                Esos emprendimientos son{" "}
+                <a
+                  href="https://balanzas-caballito.vercel.app/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white font-medium hover:text-[#FF8C00] transition-colors"
+                >
+                  Balanzas Caballito
+                </a>
+                {" "}y{" "}
+                <a
+                  href="https://tecnofan-e-commerce.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white font-medium hover:text-[#FF8C00] transition-colors"
+                >
+                  TecnoFan
+                </a>
+                , donde sigo aplicando en la práctica lo que desarrollo.
               </p>
               <p>
                 Todo lo que construí para esas tiendas —el sitio, el catálogo, los
@@ -112,7 +111,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: photo + businesses */}
+          {/* Right: photo + buttons */}
           <div className="flex flex-col gap-6">
             {/* Photo */}
             <motion.div
@@ -140,71 +139,33 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Business cards */}
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-600">
-                Mis emprendimientos
-              </p>
-              {businesses.map((biz, i) => (
-                <motion.div
-                  key={biz.name}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.45 + i * 0.12 }}
-                >
-                  {biz.url === "#" ? (
-                    <div className="rounded-xl border border-white/8 bg-white/3 px-4 py-3 opacity-60">
-                      <BizCard biz={biz} />
-                    </div>
-                  ) : (
-                    <a
-                      href={biz.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={`Visitar ${biz.name}`}
-                      aria-label={`Visitar ${biz.name}`}
-                      className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 hover:border-[#FF8C00]/40 hover:bg-white/8 transition-all duration-200 group"
-                    >
-                      <BizCard biz={biz} linked />
-                    </a>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
+              className="flex gap-3"
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("proyectos")?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="flex-1 text-center border border-white/20 text-white text-sm font-medium px-5 py-3 rounded-xl hover:border-[#FF8C00]/60 hover:text-[#FF8C00] transition-all duration-200"
+              >
+                Más info
+              </button>
+              <Link
+                href="/servicios"
+                className="flex-1 text-center bg-[#FF8C00] text-white text-sm font-semibold px-5 py-3 rounded-xl hover:bg-[#FF8C00]/90 transition-all duration-200"
+              >
+                Contactame
+              </Link>
+            </motion.div>
           </div>
 
         </div>
       </div>
     </section>
-  );
-}
-
-function BizCard({
-  biz,
-  linked,
-}: {
-  biz: { name: string; description: string; url: string; accent: string };
-  linked?: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="flex items-center gap-2.5 min-w-0">
-        <span
-          className="w-2 h-2 rounded-full shrink-0"
-          style={{ background: biz.accent }}
-        />
-        <div className="min-w-0">
-          <p className="text-white text-sm font-semibold truncate">{biz.name}</p>
-          <p className="text-gray-500 text-xs leading-snug">{biz.description}</p>
-        </div>
-      </div>
-      {linked ? (
-        <ExternalLink size={13} className="text-gray-600 group-hover:text-[#FF8C00] transition-colors shrink-0" />
-      ) : (
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-600 border border-white/10 rounded-full px-2 py-0.5 shrink-0">
-          Próximo
-        </span>
-      )}
-    </div>
   );
 }
