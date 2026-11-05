@@ -2,26 +2,41 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Sobre mí",    href: "#sobre-mi",    external: false },
-  { label: "Proyectos",   href: "#proyectos",   external: false },
-  { label: "Experiencia", href: "#experiencia", external: false },
-  { label: "Contacto",    href: "#contacto",    external: false },
-  { label: "Servicios",   href: "/servicios",   external: false },
+  { label: "Sobre mí",    href: "#sobre-mi"  },
+  { label: "Proyectos",   href: "#proyectos" },
+  { label: "Experiencia", href: "#experiencia" },
+  { label: "Contacto",    href: "#contacto"  },
+  { label: "Portfolio",   href: "/portfolio" },
+  { label: "Servicios",   href: "/servicios" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  function isActive(href: string) {
+    if (href.startsWith("#")) return false;
+    return pathname === href;
+  }
+
+  function linkClass(href: string) {
+    if (isActive(href)) return "text-[#FF8C00]";
+    if (href === "/servicios" && pathname !== "/portfolio") return "text-[#FF8C00] hover:text-[#FF8C00]/80";
+    return "text-gray-300 hover:text-[#FF8C00]";
+  }
 
   return (
     <header
@@ -34,8 +49,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
-          {/* Logo / brand — animated swap on scroll */}
-          <a href="#" className="relative flex items-center h-10 overflow-hidden">
+          {/* Logo */}
+          <Link href="/" className="relative flex items-center h-10 overflow-hidden">
             <AnimatePresence mode="wait">
               {scrolled ? (
                 <motion.div
@@ -66,18 +81,14 @@ export function Navbar() {
                 </motion.span>
               )}
             </AnimatePresence>
-          </a>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-sm transition-colors duration-200 font-medium ${
-                  link.label === "Servicios"
-                    ? "text-[#FF8C00] hover:text-[#FF8C00]/80"
-                    : "text-gray-300 hover:text-[#FF8C00]"
-                }`}
+                className={`text-sm transition-colors duration-200 font-medium ${linkClass(link.href)}`}
               >
                 {link.label}
               </a>
@@ -102,11 +113,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className={`transition-colors py-2 font-medium ${
-                  link.label === "Servicios"
-                    ? "text-[#FF8C00]"
-                    : "text-gray-300 hover:text-[#FF8C00]"
-                }`}
+                className={`transition-colors py-2 font-medium ${linkClass(link.href)}`}
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}

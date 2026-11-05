@@ -7,38 +7,46 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Github, X, CheckCircle2 } from "lucide-react";
 import { projects, type Project } from "@/data/projects";
 
+// Strip /index.html so thum.io gets a clean root URL
+function thumbUrl(url: string) {
+  return `https://image.thum.io/get/width/1200/crop/900/${url.replace(/\/index\.html$/, "/")}`;
+}
+
 // ─── Browser chrome screenshot mockup ────────────────────────────────────────
 function SitePreview({ url, accent }: { url: string; accent: string }) {
   const [errored, setErrored] = useState(false);
-  const thumbUrl = `https://image.thum.io/get/width/1200/crop/900/${url}`;
+  const displayUrl = url.replace(/^https?:\/\//, "");
 
   return (
-    <div className="relative h-44 overflow-hidden rounded-t-2xl bg-gray-100">
+    <div
+      className="relative h-44 overflow-hidden rounded-t-2xl"
+      style={{ background: `linear-gradient(135deg, ${accent}18, ${accent}08)` }}
+    >
       {/* Browser chrome */}
       <div className="flex items-center gap-1.5 px-3 py-2 bg-gray-200 border-b border-gray-300">
         <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
         <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
         <span className="w-2.5 h-2.5 rounded-full bg-green-400" />
         <div className="flex-1 mx-3 bg-white rounded text-[10px] text-gray-400 px-2 py-0.5 truncate">
-          {url.replace(/^https?:\/\//, "")}
+          {displayUrl}
         </div>
       </div>
 
-      {/* Screenshot */}
-      {!errored ? (
+      {/* Screenshot over accent bg */}
+      {!errored && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={thumbUrl}
-          alt={url}
-          className="w-full h-full object-cover object-top"
+          src={thumbUrl(url)}
+          alt={displayUrl}
+          className="absolute inset-0 w-full h-full object-cover object-top"
           onError={() => setErrored(true)}
           loading="lazy"
         />
-      ) : (
-        <div
-          className="w-full h-full flex items-center justify-center"
-          style={{ background: `linear-gradient(135deg, ${accent}22, ${accent}08)` }}
-        >
+      )}
+
+      {/* Fallback icon if errored */}
+      {errored && (
+        <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${accent}22` }}>
             <ArrowUpRight size={18} style={{ color: accent }} />
           </div>
@@ -174,12 +182,10 @@ function ProjectCard({ project, index, isInView, onClick }: {
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.12 }}
       onClick={onClick}
-      className="group text-left rounded-2xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-lg transition-all duration-300 overflow-hidden w-full cursor-pointer flex flex-col shadow-sm"
+      className="group text-left rounded-2xl border border-gray-200 bg-white hover:border-[#FF8C00]/40 hover:shadow-[0_0_24px_rgba(255,140,0,0.12)] transition-all duration-300 overflow-hidden w-full cursor-pointer flex flex-col shadow-sm"
     >
-      {/* Screenshot header */}
       <SitePreview url={project.url} accent={project.accent} />
 
-      {/* Body */}
       <div className="flex flex-col flex-1 p-5">
         <span className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: project.accent }}>
           {project.cat}
@@ -187,7 +193,6 @@ function ProjectCard({ project, index, isInView, onClick }: {
         <h3 className="font-display font-bold text-base text-gray-900 mb-2 leading-snug">{project.name}</h3>
         <p className="text-gray-500 text-sm leading-relaxed flex-1 line-clamp-2">{project.desc}</p>
 
-        {/* Stack tags */}
         <div className="flex flex-wrap gap-1.5 mt-4 mb-4">
           {project.stack.slice(0, 4).map((tech) => (
             <span key={tech} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">
@@ -196,14 +201,13 @@ function ProjectCard({ project, index, isInView, onClick }: {
           ))}
         </div>
 
-        {/* Footer CTA */}
         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-          <span className="text-xs text-gray-400 group-hover:text-gray-600 transition-colors">
+          <span className="text-xs text-gray-400 group-hover:text-[#FF8C00] transition-colors">
             Ver detalle
           </span>
           <ArrowUpRight
             size={15}
-            className="text-gray-400 group-hover:text-gray-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+            className="text-gray-400 group-hover:text-[#FF8C00] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
           />
         </div>
       </div>
@@ -228,7 +232,6 @@ export function Portfolio({ topPadding = false }: { topPadding?: boolean }) {
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -246,7 +249,6 @@ export function Portfolio({ topPadding = false }: { topPadding?: boolean }) {
             </p>
           </motion.div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {realProjects.map((project, i) => (
               <ProjectCard
@@ -259,7 +261,6 @@ export function Portfolio({ topPadding = false }: { topPadding?: boolean }) {
             ))}
           </div>
 
-          {/* Ver portfolio completo */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}

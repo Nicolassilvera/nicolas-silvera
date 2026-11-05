@@ -24,10 +24,7 @@ export function Hero() {
       id="sobre-mi"
       className="relative min-h-screen bg-[#1a1a1a] flex items-center overflow-hidden"
     >
-      {/* Background grid */}
       <div className="hero-grid absolute inset-0 opacity-5" />
-
-      {/* Orange glow blobs */}
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#FF8C00]/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-[#FF8C00]/5 rounded-full blur-3xl" />
 
@@ -97,7 +94,6 @@ export function Hero() {
               </div>
             </motion.div>
 
-            {/* Ver proyectos */}
             <motion.div {...fadeUp(0.5)} className="mt-8">
               <button
                 type="button"
@@ -111,18 +107,18 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: photo + buttons */}
-          <div className="flex flex-col gap-6">
-            {/* Photo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center lg:justify-end"
-            >
+          {/* Right: photo + buttons stacked, same width */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="flex justify-center lg:justify-end"
+          >
+            <div className="flex flex-col gap-3 w-56 sm:w-64">
+              {/* Photo */}
               <div className="relative">
                 <div className="absolute inset-0 rounded-2xl bg-[#FF8C00]/20 blur-2xl scale-110" />
-                <div className="relative w-56 h-72 sm:w-64 sm:h-80 rounded-2xl overflow-hidden border-2 border-[#FF8C00]/30 shadow-2xl shadow-[#FF8C00]/10">
+                <div className="relative w-full h-72 sm:h-80 rounded-2xl overflow-hidden border-2 border-[#FF8C00]/30 shadow-2xl shadow-[#FF8C00]/10">
                   <Image
                     src="/logos/foto_perfil.png"
                     alt="Nicolás Silvera"
@@ -137,32 +133,25 @@ export function Hero() {
                   <p className="text-gray-400 text-xs">Remoto y presencial</p>
                 </div>
               </div>
-            </motion.div>
 
-            {/* CTA buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.45 }}
-              className="flex gap-3"
-            >
+              {/* Buttons — stacked, full width of photo */}
               <button
                 type="button"
                 onClick={() =>
                   document.getElementById("proyectos")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="flex-1 text-center border border-white/20 text-white text-sm font-medium px-5 py-3 rounded-xl hover:border-[#FF8C00]/60 hover:text-[#FF8C00] transition-all duration-200"
+                className="w-full text-center border border-white/20 text-white text-sm font-medium px-5 py-3 rounded-xl hover:border-[#FF8C00]/60 hover:text-[#FF8C00] transition-all duration-200"
               >
                 Más info
               </button>
               <Link
                 href="/servicios"
-                className="flex-1 text-center bg-[#FF8C00] text-white text-sm font-semibold px-5 py-3 rounded-xl hover:bg-[#FF8C00]/90 transition-all duration-200"
+                className="w-full text-center bg-[#FF8C00] text-white text-sm font-semibold px-5 py-3 rounded-xl hover:bg-[#FF8C00]/90 transition-all duration-200"
               >
                 Contactame
               </Link>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
 
         </div>
       </div>
