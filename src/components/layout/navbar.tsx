@@ -15,14 +15,11 @@ const navLinks = [
   { label: "Contacto",    href: "#contacto"    },
 ];
 
-// Pages with a light (white) background — navbar text goes dark
-const lightPages = ["/portfolio", "/experiencia"];
-
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isLight = lightPages.includes(pathname);
+  const isLight = false;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
